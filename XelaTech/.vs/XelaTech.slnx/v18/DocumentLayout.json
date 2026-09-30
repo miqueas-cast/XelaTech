@@ -3,12 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{03A6313C-7001-4B28-AEF4-9EE16B5F11A4}|XelaTech\\XelaTech.csproj|c:\\users\\castm\\desktop\\xelatech\\xelatech\\xelatech\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{03A6313C-7001-4B28-AEF4-9EE16B5F11A4}|XelaTech\\XelaTech.csproj|solutionrelative:xelatech\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{03A6313C-7001-4B28-AEF4-9EE16B5F11A4}|XelaTech\\XelaTech.csproj|C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\xelatech\\repuesto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{03A6313C-7001-4B28-AEF4-9EE16B5F11A4}|XelaTech\\XelaTech.csproj|solutionrelative:xelatech\\repuesto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{03A6313C-7001-4B28-AEF4-9EE16B5F11A4}|XelaTech\\XelaTech.csproj|C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\xelatech\\equipo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{03A6313C-7001-4B28-AEF4-9EE16B5F11A4}|XelaTech\\XelaTech.csproj|solutionrelative:xelatech\\equipo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{03A6313C-7001-4B28-AEF4-9EE16B5F11A4}|XelaTech\\XelaTech.csproj|C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\xelatech\\solicitud.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{03A6313C-7001-4B28-AEF4-9EE16B5F11A4}|XelaTech\\XelaTech.csproj|solutionrelative:xelatech\\solicitud.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{03A6313C-7001-4B28-AEF4-9EE16B5F11A4}|XelaTech\\XelaTech.csproj|c:\\users\\castm\\desktop\\xelatech\\xelatech\\xelatech\\persona.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{03A6313C-7001-4B28-AEF4-9EE16B5F11A4}|XelaTech\\XelaTech.csproj|solutionrelative:xelatech\\persona.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{03A6313C-7001-4B28-AEF4-9EE16B5F11A4}|XelaTech\\XelaTech.csproj|C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\xelatech\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{03A6313C-7001-4B28-AEF4-9EE16B5F11A4}|XelaTech\\XelaTech.csproj|solutionrelative:xelatech\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,26 +38,65 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Repuesto.cs",
+              "DocumentMoniker": "C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\XelaTech\\Repuesto.cs",
+              "RelativeDocumentMoniker": "XelaTech\\Repuesto.cs",
+              "ToolTip": "C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\XelaTech\\Repuesto.cs",
+              "RelativeToolTip": "XelaTech\\Repuesto.cs",
+              "ViewState": "AgIAAJQAAAAAAAAAAAAYwKcAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-29T21:54:58.959Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "Equipo.cs",
+              "DocumentMoniker": "C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\XelaTech\\Equipo.cs",
+              "RelativeDocumentMoniker": "XelaTech\\Equipo.cs",
+              "ToolTip": "C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\XelaTech\\Equipo.cs",
+              "RelativeToolTip": "XelaTech\\Equipo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAALoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-29T21:54:34.182Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Solicitud.cs",
+              "DocumentMoniker": "C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\XelaTech\\Solicitud.cs",
+              "RelativeDocumentMoniker": "XelaTech\\Solicitud.cs",
+              "ToolTip": "C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\XelaTech\\Solicitud.cs",
+              "RelativeToolTip": "XelaTech\\Solicitud.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJkAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-29T21:54:21.587Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Persona.cs",
               "DocumentMoniker": "C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\XelaTech\\Persona.cs",
               "RelativeDocumentMoniker": "XelaTech\\Persona.cs",
               "ToolTip": "C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\XelaTech\\Persona.cs",
               "RelativeToolTip": "XelaTech\\Persona.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADQAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-09-29T21:39:17.307Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\XelaTech\\Program.cs",
               "RelativeDocumentMoniker": "XelaTech\\Program.cs",
               "ToolTip": "C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\XelaTech\\Program.cs",
               "RelativeToolTip": "XelaTech\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-09-29T21:37:10.148Z",
               "EditorCaption": ""

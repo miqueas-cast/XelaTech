@@ -1,0 +1,7 @@
+C:\Users\castm\Desktop\XelaTech\XelaTech\XelaTech\obj\Debug\XelaTech.csproj.AssemblyReference.cache
+C:\Users\castm\Desktop\XelaTech\XelaTech\XelaTech\obj\Debug\XelaTech.csproj.CoreCompileInputs.cache
+C:\Users\castm\Desktop\XelaTech\XelaTech\XelaTech\bin\Debug\XelaTech.exe.config
+C:\Users\castm\Desktop\XelaTech\XelaTech\XelaTech\bin\Debug\XelaTech.exe
+C:\Users\castm\Desktop\XelaTech\XelaTech\XelaTech\bin\Debug\XelaTech.pdb
+C:\Users\castm\Desktop\XelaTech\XelaTech\XelaTech\obj\Debug\XelaTech.exe
+C:\Users\castm\Desktop\XelaTech\XelaTech\XelaTech\obj\Debug\XelaTech.pdb

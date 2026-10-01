@@ -157,113 +157,113 @@ namespace XelaTech
 		{
 			TipoCliente = nuevoTipoCliente;
 		}
-		public class Tecnico : Persona
-		{
-			private string especialidad;
-			private string estadoDisponibilidad;
-			private int cantidadTrabajosActivos;
-			private int cantidadTrabajosFinalizados;
-			private double calificacionPromedio;
-
-			public double CalificacionPromedio
-			{
-				get { return calificacionPromedio; }
-				set
-				{
-					if (value < 0 || value > 5)
-					{
-						throw new ArgumentException("La calificación promedio debe estar entre 0 y 5.");
-					}
-					else
-					{
-						calificacionPromedio = value;
-					}
-				}
-			}
-
-			public int CantidadTrabajosFinalizados
-			{
-				get { return cantidadTrabajosFinalizados; }
-				set
-				{
-					if (value < 0)
-					{
-						throw new ArgumentException("La cantidad de trabajos finalizados no puede ser negativa.");
-					}
-					else
-					{
-						cantidadTrabajosFinalizados = value;
-					}
-				}
-			}
-
-			public int CantidadTrabajosActivos
-			{
-				get { return cantidadTrabajosActivos; }
-				set
-				{
-					if (value < 0)
-					{
-						throw new ArgumentException("La cantidad de trabajos activos no puede ser negativa.");
-					}
-					else
-					{
-						cantidadTrabajosActivos = value;
-					}
-				}
-			}
-
-			public string EstadoDisponibilidad
-			{
-				get { return estadoDisponibilidad; }
-				set
-				{
-					if (value == null || (value != "Disponible" && value != "No Disponible"))
-					{
-						throw new ArgumentException("El estado de disponibilidad debe ser 'Disponible' o 'No Disponible'.");
-					}
-					else
-					{
-						estadoDisponibilidad = value;
-					}
-				}
-			}
-
-			public string Especialidad
-			{
-				get { return especialidad; }
-				set
-				{
-					if (value == null || value.Length < 3)
-					{
-						throw new ArgumentException("La especialidad debe tener al menos 3 caracteres.");
-					}
-					else
-					{
-						especialidad = value;
-					}
-				}
-			}
-			public Tecnico(int codigo, string nombre, string especialidad, string estadoDisponibilidad)
-				: base(codigo, nombre)
-			{
-				Especialidad = especialidad;
-				EstadoDisponibilidad = estadoDisponibilidad;
-				CantidadTrabajosActivos = 0;
-				CantidadTrabajosFinalizados = 0;
-				CalificacionPromedio = 0;
-			}
-			public virtual void MostrarInformacion()
-			{
-                Console.WriteLine("Codigo: TEC-" + Codigo);
-                Console.WriteLine("Nombre: " + NombreCompleto);
-				Console.WriteLine("Especialidad: " + Especialidad);
-				Console.WriteLine("Estado de disponibilidad: " + EstadoDisponibilidad);
-				Console.WriteLine("Cantidad de trabajos activos: " + CantidadTrabajosActivos);
-				Console.WriteLine("Cantidad de trabajos finalizados: " + CantidadTrabajosFinalizados);
-				Console.WriteLine("Calificación promedio: " + CalificacionPromedio);
-			}
-		}
-
+		
 	}
+    public class Tecnico : Persona
+    {
+        private string especialidad;
+        private string estadoDisponibilidad;
+        private int cantidadTrabajosActivos;
+        private int cantidadTrabajosFinalizados;
+        private double calificacionPromedio;
+
+        public double CalificacionPromedio
+        {
+            get { return calificacionPromedio; }
+            set
+            {
+                if (value < 0 || value > 5)
+                {
+                    throw new ArgumentException("La calificación promedio debe estar entre 0 y 5.");
+                }
+                else
+                {
+                    calificacionPromedio = value;
+                }
+            }
+        }
+
+        public int CantidadTrabajosFinalizados
+        {
+            get { return cantidadTrabajosFinalizados; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("La cantidad de trabajos finalizados no puede ser negativa.");
+                }
+                else
+                {
+                    cantidadTrabajosFinalizados = value;
+                }
+            }
+        }
+
+        public int CantidadTrabajosActivos
+        {
+            get { return cantidadTrabajosActivos; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("La cantidad de trabajos activos no puede ser negativa.");
+                }
+                else
+                {
+                    cantidadTrabajosActivos = value;
+                }
+            }
+        }
+
+        public string EstadoDisponibilidad
+        {
+            get { return estadoDisponibilidad; }
+            set
+            {
+                if (value == null || (value != "Disponible" && value != "No Disponible"))
+                {
+                    throw new ArgumentException("El estado de disponibilidad debe ser 'Disponible' o 'No Disponible'.");
+                }
+                else
+                {
+                    estadoDisponibilidad = value;
+                }
+            }
+        }
+
+        public string Especialidad
+        {
+            get { return especialidad; }
+            set
+            {
+                if (value == null || value.Length < 3)
+                {
+                    throw new ArgumentException("La especialidad debe tener al menos 3 caracteres.");
+                }
+                else
+                {
+                    especialidad = value;
+                }
+            }
+        }
+        public Tecnico(int codigo, string nombre, string especialidad, string estadoDisponibilidad)
+            : base(codigo, nombre)
+        {
+            Especialidad = especialidad;
+            EstadoDisponibilidad = estadoDisponibilidad;
+            CantidadTrabajosActivos = 0;
+            CantidadTrabajosFinalizados = 0;
+            CalificacionPromedio = 0;
+        }
+        public virtual void MostrarInformacion()
+        {
+            Console.WriteLine("Codigo: TEC-" + Codigo);
+            Console.WriteLine("Nombre: " + NombreCompleto);
+            Console.WriteLine("Especialidad: " + Especialidad);
+            Console.WriteLine("Estado de disponibilidad: " + EstadoDisponibilidad);
+            Console.WriteLine("Cantidad de trabajos activos: " + CantidadTrabajosActivos);
+            Console.WriteLine("Cantidad de trabajos finalizados: " + CantidadTrabajosFinalizados);
+            Console.WriteLine("Calificación promedio: " + CalificacionPromedio);
+        }
+    }
 }

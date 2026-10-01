@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -13,7 +14,7 @@ namespace XelaTech
         static void Main(string[] args)
         {
             List<Cliente> Clientes = new List<Cliente>();
-
+            List<Tecnico> Tecnicos = new List<Tecnico>();
             int opcionMenu;
             do
             {
@@ -208,7 +209,6 @@ namespace XelaTech
                                     break;
                                 case 3:
                                     Console.Clear();
-                                    Console.Clear();
                                     int codigoBuscarCase3 = ValidarEntradasInt("Ingrese codigo de cliente a buscar: CLI-", 1, int.MaxValue, "Error: codigo no valido!");
                                     int indiceCodigoClienteCase3 = -1;
                                     for (int i = 0; i < Clientes.Count; i++)
@@ -337,7 +337,140 @@ namespace XelaTech
                         break;
                     case 2:
                         Console.Clear();
+                        int opcionMenuTecnicos;
+                        do
+                        {
+                            opcionMenuTecnicos = ValidarEntradasInt("============================================\r\n GESTIÓN DE TÉCNICOS\r\n============================================\r\n1. Agregar técnico\r\n2. Consultar técnico\r\n3. Actualizar información\r\n4. Regresar el menú principal\n\nSelecciona una opción: ", 1, 4, "Error: Opción invlida");
+                            switch (opcionMenuTecnicos)
+                            {
+                                case 1:
+                                    Console.ReadKey();
+                                    int codigoTecnicos = Tecnicos.Count + 1;
+                                    Console.Write("Ingrese nombre: ");
+                                    string nombreTecnico = Console.ReadLine();
+                                    Console.Clear();
+                                    string especialidad;
 
+                                    while (true)
+                                    {
+                                        int opcionEspecialidad = ValidarEntradasInt("Escoga tipo de especialidad: \n\n1. Uno\n2. dos\n3. tres", 1, 2, "Error: Opción no valida");
+                                        if (opcionEspecialidad == 1) 
+                                        {
+                                            especialidad = "Uno";
+                                            break;
+                                        }
+                                        else if(opcionEspecialidad == 2)
+                                        {
+                                            especialidad = "Dos";
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            especialidad = "Tres";
+                                            break;
+                                        }
+                                    }
+                                    Console.Clear();
+                                    string estadoDisponibilidad;
+                                    while (true)
+                                    {
+                                        int opcionDisponibilidad = ValidarEntradasInt("Escoga disponibilidad: \n\n1. Disponible\n2. No disponible\n\nIngrese una opción: ", 1, 2, "Error: Opción no valida");
+                                        if(opcionDisponibilidad == 1)
+                                        {
+                                            estadoDisponibilidad = "Disponible";
+                                        }
+                                        else
+                                        {
+                                            estadoDisponibilidad = "No disponible";
+                                        }
+
+                                    }
+                                    while (true)
+                                    {
+                                        int confirmacionTec = ValidarEntradasInt($"Resumen de datos: \n\nCodigo: TEC-{codigoTecnicos}\nNombre: {nombreTecnico}\nEspecialidad: {especialidad}\nEstado disponibildad: {estadoDisponibilidad}\n\n¿Esta seguro de registrar REP-{codigoTecnicos}?\n\n1. SI\n2. NO", 1, 2, "Error: Opción no valida");
+                                        if(confirmacionTec == 1)
+                                        {
+                                            Console.Clear();
+                                            Tecnicos.Add(new Tecnico(codigoTecnicos, nombreTecnico, especialidad, estadoDisponibilidad));
+                                            Console.WriteLine("Tecnico registrado exitosamente!");
+                                            Console.ReadKey();
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            Console.Clear();
+                                            MostrarErrorAnimado("Operación cancelada");
+                                            break;
+                                        }
+                                    }
+                                    Console.Clear();
+                                    break;
+                                case 2:
+                                    Console.ReadKey();
+                                    int opcionCase2Tec;
+                                    do
+                                    {
+                                        opcionCase2Tec = ValidarEntradasInt("1. Consultar repartidor por codigo\n2. Ver todos los tecnicos registrados\n3. Volver atras\n\nEliga una opción: ", 1, 2, "Error: opción no valida");
+                                        switch (opcionCase2Tec)
+                                        {
+                                            case 1:
+                                                Console.Clear();
+                                                int codigoBuscarTec = ValidarEntradasInt("Ingrese codigo de tecnico a buscar: TEC-", 1, int.MaxValue, "Cleinte no encontrado");
+                                                int indiceCodigoTec = -1;
+                                                for(int i = 0; i < Tecnicos.Count; i++)
+                                                {
+                                                    if (Tecnicos[i].Codigo == codigoBuscarTec)
+                                                    {
+                                                        indiceCodigoTec = i;
+                                                    }
+                                                }
+                                                if (indiceCodigoTec == -1)
+                                                {
+                                                    Console.WriteLine("Cliente no encontrado");
+                                                }
+                                                else
+                                                {
+                                                    Console.Clear();
+                                                    Tecnicos[indiceCodigoTec].MostrarInformacion();
+                                                    Console.ReadKey();
+                                                }
+
+                                                break;
+                                            case 2:
+                                                if(Tecnicos.Count == 0)
+                                                {
+                                                    MostrarErrorAnimado("Sin tecnicos registrados");
+                                                }
+                                                else
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("Clientes regisrados");
+                                                    foreach(Tecnico tecnico in Tecnicos)
+                                                    {
+                                                        tecnico.MostrarInformacion();
+                                                        Console.WriteLine();
+                                                    }
+                                                    Console.ReadKey();
+                                                }
+                                                break;
+                                            case 3:
+                                                break;
+                                        }
+                                    } while (opcionCase2Tec != 3);
+                                    Console.Clear();
+                                    break;
+                                case 3:
+                                    Console.ReadKey();
+
+                                    Console.Clear();
+                                    break;
+                                case 4:
+                                    Console.ReadKey();
+
+                                    Console.Clear();
+                                    break;
+                            }
+                        } while (opcionMenuTecnicos != 4);
                         Console.ReadKey();
                         break;
                     case 3:

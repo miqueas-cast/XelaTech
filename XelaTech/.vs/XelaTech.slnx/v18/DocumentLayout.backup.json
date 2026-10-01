@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{03A6313C-7001-4B28-AEF4-9EE16B5F11A4}|XelaTech\\XelaTech.csproj|C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\xelatech\\persona.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{03A6313C-7001-4B28-AEF4-9EE16B5F11A4}|XelaTech\\XelaTech.csproj|solutionrelative:xelatech\\persona.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{03A6313C-7001-4B28-AEF4-9EE16B5F11A4}|XelaTech\\XelaTech.csproj|C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\xelatech\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{03A6313C-7001-4B28-AEF4-9EE16B5F11A4}|XelaTech\\XelaTech.csproj|solutionrelative:xelatech\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{03A6313C-7001-4B28-AEF4-9EE16B5F11A4}|XelaTech\\XelaTech.csproj|C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\xelatech\\persona.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{03A6313C-7001-4B28-AEF4-9EE16B5F11A4}|XelaTech\\XelaTech.csproj|solutionrelative:xelatech\\persona.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{03A6313C-7001-4B28-AEF4-9EE16B5F11A4}|XelaTech\\XelaTech.csproj|C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\xelatech\\repuesto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -76,26 +76,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Persona.cs",
               "DocumentMoniker": "C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\XelaTech\\Persona.cs",
               "RelativeDocumentMoniker": "XelaTech\\Persona.cs",
-              "ToolTip": "C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\XelaTech\\Persona.cs*",
-              "RelativeToolTip": "XelaTech\\Persona.cs*",
-              "ViewState": "AgIAAOoAAAAAAAAAAAAuwAEBAAA7AAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\XelaTech\\Persona.cs",
+              "RelativeToolTip": "XelaTech\\Persona.cs",
+              "ViewState": "AgIAAOoAAAAAAAAAAAAuwPsAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-09-29T21:39:17.307Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\XelaTech\\Program.cs",
               "RelativeDocumentMoniker": "XelaTech\\Program.cs",
               "ToolTip": "C:\\Users\\castm\\Desktop\\XelaTech\\XelaTech\\XelaTech\\Program.cs",
               "RelativeToolTip": "XelaTech\\Program.cs",
-              "ViewState": "AgIAANMAAAAAAAAAAAAQwOYAAABdAAAAAAAAAA==",
+              "ViewState": "AgIAADYBAAAAAAAAAAAQwCsAAABWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-09-29T21:37:10.148Z",
               "EditorCaption": ""

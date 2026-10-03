@@ -265,5 +265,17 @@ namespace XelaTech
             Console.WriteLine("Cantidad de trabajos finalizados: " + CantidadTrabajosFinalizados);
             Console.WriteLine("Calificación promedio: " + CalificacionPromedio);
         }
+		public void ActualizarNombre(string nuevoNombre)
+		{
+            NombreCompleto = nuevoNombre;
+        }
+		public void ActualizarEspecialidad(string nuevaEspecialidad)
+		{
+            Especialidad = nuevaEspecialidad;
+        }
+		public void ActualizarEstadoDisponibilidad(string nuevoEstadoDisponibilidad)
+		{
+            EstadoDisponibilidad = nuevoEstadoDisponibilidad;
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -111,7 +112,6 @@ namespace XelaTech
                 }
             }
 		}
-
 		public int Codigo
 		{
 			get { return codigo; }
@@ -127,12 +127,11 @@ namespace XelaTech
                 }
             }
 		}
-        public Equipo(int codigo, string marca, string modelo, string tipoEquipo, string estadoFisico, string accesorios, string numeroSerie)
+        public Equipo(int codigo, string marca, string modelo, string estadoFisico, string accesorios, string numeroSerie)
         {
             Codigo = codigo;
             Marca = marca;
             Modelo = modelo;
-            TipoEquipo = tipoEquipo;
             EstadoFisico = estadoFisico;
             Accesorios = accesorios;
             NumeroSerie = numeroSerie;
@@ -147,12 +146,36 @@ namespace XelaTech
             Console.WriteLine("Accesorios: " + Accesorios);
             Console.WriteLine("Número de serie: " + NumeroSerie);
         }
+        public virtual void ActualizarMarca(string marca)
+        {
+            Marca = marca;
+        }
+        public virtual void ActualiziarModelo(string modelo)
+        {
+            Modelo = modelo;
+        }
+        public virtual void ActualziarTipoEquipo(string tipoEquipo)
+        {
+            TipoEquipo = tipoEquipo; 
+        }
+        public virtual void ActualizarEstadoFisico(string estadoEquipo)
+        {
+            EstadoFisico = estadoEquipo;
+        }
+        public virtual void ActualizarNumeroSerie(string numeroSerie)
+        {
+            NumeroSerie = numeroSerie; 
+        }
+        public virtual void ActualizarAccesorios(string accesorios)
+        {
+            Accesorios = accesorios;
+        }
 
     }
 	public class ComputadoraPortatil: Equipo
 	{
-        public ComputadoraPortatil(int codigo, string marca, string modelo, string tipoEquipo, string estadoFisico, string accesorios, string numeroSerie) 
-            : base(codigo, marca, modelo, tipoEquipo, estadoFisico, accesorios, numeroSerie)
+        public ComputadoraPortatil(int codigo, string marca, string modelo, string estadoFisico, string accesorios, string numeroSerie) 
+            : base(codigo, marca, modelo, estadoFisico, accesorios, numeroSerie)
         {
             
         }
@@ -160,11 +183,13 @@ namespace XelaTech
         {
             base.MostrarInformacion();
         }
+
+        
     }
 	public class ComputadoraDeEscritorio : Equipo
     {
-        public ComputadoraDeEscritorio(int codigo, string marca, string modelo, string tipoEquipo, string estadoFisico, string accesorios, string numeroSerie)
-            : base(codigo, marca, modelo, tipoEquipo, estadoFisico, accesorios, numeroSerie)
+        public ComputadoraDeEscritorio(int codigo, string marca, string modelo, string estadoFisico, string accesorios, string numeroSerie)
+            : base(codigo, marca, modelo, estadoFisico, accesorios, numeroSerie)
         {
 
         }
@@ -176,8 +201,8 @@ namespace XelaTech
     }
 	public class Impresora : Equipo
     {
-        public Impresora(int codigo, string marca, string modelo, string tipoEquipo, string estadoFisico, string accesorios, string numeroSerie)
-            : base(codigo, marca, modelo, tipoEquipo, estadoFisico, accesorios, numeroSerie)
+        public Impresora(int codigo, string marca, string modelo, string estadoFisico, string accesorios, string numeroSerie)
+            : base(codigo, marca, modelo, estadoFisico, accesorios, numeroSerie)
         {
         }
         public override void MostrarInformacion()

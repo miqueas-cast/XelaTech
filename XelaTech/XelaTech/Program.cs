@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -15,6 +17,9 @@ namespace XelaTech
         {
             List<Cliente> Clientes = new List<Cliente>();
             List<Tecnico> Tecnicos = new List<Tecnico>();
+            List<ComputadoraPortatil> computadoraPortatils = new List<ComputadoraPortatil>();
+            List<ComputadoraDeEscritorio> computadoraDeEscritorios = new List<ComputadoraDeEscritorio>();
+            List<Impresora> Impresoras = new List<Impresora>();
             int opcionMenu;
             do
             {
@@ -378,10 +383,12 @@ namespace XelaTech
                                         if(opcionDisponibilidad == 1)
                                         {
                                             estadoDisponibilidad = "Disponible";
+                                            break;
                                         }
                                         else
                                         {
                                             estadoDisponibilidad = "No disponible";
+                                            break;
                                         }
 
                                     }
@@ -415,7 +422,7 @@ namespace XelaTech
                                         {
                                             case 1:
                                                 Console.Clear();
-                                                int codigoBuscarTec = ValidarEntradasInt("Ingrese codigo de tecnico a buscar: TEC-", 1, int.MaxValue, "Cleinte no encontrado");
+                                                int codigoBuscarTec = ValidarEntradasInt("Ingrese codigo de tecnico a buscar: TEC-", 1, int.MaxValue, "Cliente no encontrado");
                                                 int indiceCodigoTec = -1;
                                                 for(int i = 0; i < Tecnicos.Count; i++)
                                                 {
@@ -460,21 +467,553 @@ namespace XelaTech
                                     Console.Clear();
                                     break;
                                 case 3:
-                                    Console.ReadKey();
-
                                     Console.Clear();
+                                    int codigoBuscarTecCase3 = ValidarEntradasInt("Ingrese codigo de cliente a buscar: CLI-", 1, int.MaxValue, "Error: codigo no valido!");
+                                    int indiceBuscarTecCase3 = -1;
+                                    for (int i = 0; i < Clientes.Count; i++)
+                                    {
+                                        if (Clientes[i].Codigo == codigoBuscarTecCase3)
+                                        {
+                                            indiceBuscarTecCase3 = i;
+                                            break;
+                                        }
+                                    }
+                                    if (indiceBuscarTecCase3 == -1)
+                                    {
+                                        MostrarErrorAnimado("Tecnico no encontrado no encontrado");
+                                    }
+                                    else
+                                    {
+                                        Console.Clear();
+                                        Console.WriteLine("Tecnico encontrado");
+                                        Console.WriteLine();
+                                        Clientes[indiceBuscarTecCase3].MostrarInformacion();
+                                        Console.WriteLine();
+                                        Console.WriteLine("Presione una tecla para continuar...");
+                                        Console.ReadKey();
+                                    }
+                                    int opcionActualizarTec;
+                                    do
+                                    {
+                                        opcionActualizarTec = ValidarEntradasInt("1. Actualizar nombre\n2. Actualizar especialidad\n3. Regresar al menú anterior\n\nSeleccione una opción: ", 1, 3, "Error: opción no valida");
+                                        switch (opcionActualizarTec)
+                                        {
+                                            case 1:
+                                                Console.Clear();
+                                                Console.Write("Ingrese nuevo nombre");
+                                                string nuevoNombreTec = Console.ReadLine();
+                                                Tecnicos[indiceBuscarTecCase3].ActualizarNombre(nuevoNombreTec);
+                                                Console.Clear();
+                                                Console.WriteLine("Nombre actualizado correctamente.");
+                                                break;
+                                            case 2:
+                                                Console.Clear();
+                                                Console.Write("Ingrese nueva especialidad");
+                                                string nuevaEspecialidadTec = Console.ReadLine();
+                                                Tecnicos[indiceBuscarTecCase3].ActualizarEspecialidad(nuevaEspecialidadTec);
+                                                Console.Clear();
+                                                Console.WriteLine("Especialidad actualizada correctamente.");
+                                                Console.ReadKey();
+                                                break;
+                                            case 3:
+                                                break;
+                                        }
+
+                                    } while (opcionActualizarTec != 3);
                                     break;
                                 case 4:
-                                    Console.ReadKey();
-
-                                    Console.Clear();
                                     break;
                             }
                         } while (opcionMenuTecnicos != 4);
-                        Console.ReadKey();
                         break;
                     case 3:
                         Console.Clear();
+                        int codigoComputadoraPortatil = computadoraPortatils.Count + 1;
+                        int codigoComputadoraDeEscritorio = computadoraDeEscritorios.Count + 1;
+                        int codigoImpresora = Impresoras.Count + 1;
+
+                        int opcionMenuEquipos;
+                        do
+                        {
+                            opcionMenuEquipos = ValidarEntradasInt("============================================\r\n GESTIÓN DE EQUIPOS\r\n============================================\r\n1. Agregar equipo\r\n2. Consultar equipo\r\n3. Actualizar información\r\n4. Regresar el menú principal\n\nSelecciona una opción: ", 1, 4, "Error: Opción invlida");
+                            switch (opcionMenuEquipos)
+                            {
+                                case 1:
+                                    int tipoEquipoRegistrar;
+                                    do
+                                    {
+                                        Console.Clear();
+                                        tipoEquipoRegistrar = ValidarEntradasInt("Seleccione tipo de equipo a registrar: \n\n1. Computadora portatil\n2. Computadora de escritorio\n3. Impresora\n4. Volver atras\n\nSeleccione una opción: ", 1, 4, "Error: opción no valida");
+                                        switch (tipoEquipoRegistrar)
+                                        {
+                                            case 1:
+                                                {
+                                                    Console.Clear();
+                                                    Console.Write("Ingrese numero de serie: ");
+                                                    string numeroSerie = Console.ReadLine();
+                                                    Console.Clear();
+                                                    Console.WriteLine("Ingrese marca: ");
+                                                    string marca = Console.ReadLine();
+                                                    Console.Clear();
+                                                    Console.WriteLine("Ingrese modelo: ");
+                                                    string modelo = Console.ReadLine();
+                                                    Console.Clear();
+                                                    string estadoFisico;
+                                                    while (true)
+                                                    {
+                                                        int opcionEstadoFisico = ValidarEntradasInt("Seleccione estado fisico: \n\n1. Excelente\n2. Con daños leves\n3. Daños severos\n\nIngrese una opción: ", 1, 3, "Error: opción no valida");
+                                                        if (opcionEstadoFisico == 1)
+                                                        {
+                                                            estadoFisico = "Excelente";
+                                                            break;
+                                                        }
+                                                        else if (opcionEstadoFisico == 2)
+                                                        {
+                                                            estadoFisico = "Con daños leves";
+                                                            break;
+                                                        }
+                                                        else
+                                                        {
+                                                            estadoFisico = "Daños severos";
+                                                            break;
+                                                        }
+                                                    }
+                                                    Console.Clear();
+                                                    Console.WriteLine("Ingrese accesorios entregados: ");
+                                                    string accesoriosEntregados = Console.ReadLine();
+                                                    Console.Clear();
+                                                    while (true)
+                                                    {
+                                                        int resumenCportatil = ValidarEntradasInt($"Resumen de datos: \n\nCodigo: {codigoComputadoraPortatil}\nNumero de serie: {numeroSerie}\nMarca: {marca}\nModelo: {modelo}\nEstado Fisico: {estadoFisico}\nAccesorios: {accesoriosEntregados}\n\n¿Esta seguro de registrar este equipo?\n1. SI\n2. NO\n\nIngrese una opción:", 1, 2, "Error: opción no valida");
+                                                        if(resumenCportatil == 1)
+                                                        {
+                                                            Console.Clear();
+                                                            computadoraPortatils.Add(new ComputadoraPortatil(codigoComputadoraPortatil, marca, modelo, estadoFisico, accesoriosEntregados, numeroSerie));
+                                                            Console.WriteLine("Equipo registrado correctamente");
+                                                            Console.ReadKey();
+                                                            break;
+                                                        }
+                                                        else
+                                                        {
+                                                            MostrarErrorAnimado("Operación cancelada");
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                                break;
+                                            case 2:
+                                                {
+                                                    Console.Clear();
+                                                    Console.Write("Ingrese numero de serie: ");
+                                                    string numeroSerie = Console.ReadLine();
+                                                    Console.Clear();
+                                                    Console.WriteLine("Ingrese marca: ");
+                                                    string marca = Console.ReadLine();
+                                                    Console.Clear();
+                                                    Console.WriteLine("Ingrese modelo: ");
+                                                    string modelo = Console.ReadLine();
+                                                    Console.Clear();
+                                                    string estadoFisico;
+                                                    while (true)
+                                                    {
+                                                        int opcionEstadoFisico = ValidarEntradasInt("Seleccione estado fisico: \n\n1. Excelente\n2. Con daños leves\n3. Daños severos\n\nIngrese una opción: ", 1, 3, "Error: opción no valida");
+                                                        if (opcionEstadoFisico == 1)
+                                                        {
+                                                            estadoFisico = "Excelente";
+                                                            break;
+                                                        }
+                                                        else if (opcionEstadoFisico == 2)
+                                                        {
+                                                            estadoFisico = "Con daños leves";
+                                                            break;
+                                                        }
+                                                        else
+                                                        {
+                                                            estadoFisico = "Daños severos";
+                                                            break;
+                                                        }
+                                                    }
+                                                    Console.Clear();
+                                                    Console.WriteLine("Ingrese accesorios entregados: ");
+                                                    string accesoriosEntregados = Console.ReadLine();
+                                                    Console.Clear();
+                                                    while (true)
+                                                    {
+                                                        int resumenCEscritorio = ValidarEntradasInt($"Resumen de datos: \n\nCodigo: {codigoComputadoraDeEscritorio}\nNumero de serie: {numeroSerie}\nMarca: {marca}\nModelo: {modelo}\nEstado Fisico: {estadoFisico}\nAccesorios: {accesoriosEntregados}\n\n¿Esta seguro de registrar este equipo?\n1. SI\n2. NO\n\nIngrese una opción:", 1, 2, "Error: opción no valida");
+                                                        if (resumenCEscritorio == 1)
+                                                        {
+                                                            Console.Clear();
+                                                            computadoraDeEscritorios.Add(new ComputadoraDeEscritorio(codigoComputadoraDeEscritorio, marca, modelo, estadoFisico, accesoriosEntregados, numeroSerie));
+                                                            Console.WriteLine("Equipo registrado correctamente");
+                                                            Console.ReadKey();
+                                                            break;
+
+                                                        }
+                                                        else
+                                                        {
+                                                            MostrarErrorAnimado("Operación cancelada");
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                                break;
+                                            case 3:
+                                                {
+                                                    Console.Clear();
+                                                    Console.Write("Ingrese numero de serie: ");
+                                                    string numeroSerie = Console.ReadLine();
+                                                    Console.Clear();
+                                                    Console.WriteLine("Ingrese marca: ");
+                                                    string marca = Console.ReadLine();
+                                                    Console.Clear();
+                                                    Console.WriteLine("Ingrese modelo: ");
+                                                    string modelo = Console.ReadLine();
+                                                    Console.Clear();
+                                                    string estadoFisico;
+                                                    while (true)
+                                                    {
+                                                        int opcionEstadoFisico = ValidarEntradasInt("Seleccione estado fisico: \n\n1. Excelente\n2. Con daños leves\n3. Daños severos\n\nIngrese una opción: ", 1, 3, "Error: opción no valida");
+                                                        if (opcionEstadoFisico == 1)
+                                                        {
+                                                            estadoFisico = "Excelente";
+                                                            break;
+                                                        }
+                                                        else if (opcionEstadoFisico == 2)
+                                                        {
+                                                            estadoFisico = "Con daños leves";
+                                                            break;
+                                                        }
+                                                        else
+                                                        {
+                                                            estadoFisico = "Daños severos";
+                                                            break;
+                                                        }
+                                                    }
+                                                    Console.Clear();
+                                                    Console.WriteLine("Ingrese accesorios entregados: ");
+                                                    string accesoriosEntregados = Console.ReadLine();
+                                                    Console.Clear();
+                                                    while (true)
+                                                    {
+                                                        int resumenImpresora = ValidarEntradasInt($"Resumen de datos: \n\nCodigo: {codigoImpresora}\nNumero de serie: {numeroSerie}\nMarca: {marca}\nModelo: {modelo}\nEstado Fisico: {estadoFisico}\nAccesorios: {accesoriosEntregados}\n\n¿Esta seguro de registrar este equipo?\n1. SI\n2. NO\n\nIngrese una opción:", 1, 2, "Error: opción no valida");
+                                                        if (resumenImpresora == 1)
+                                                        {
+                                                            Console.Clear();
+                                                            Impresoras.Add(new Impresora(codigoImpresora, marca, modelo, estadoFisico, accesoriosEntregados, numeroSerie));
+                                                            Console.WriteLine("Equipo registrado correctamente");
+                                                            Console.ReadKey();
+                                                            break;
+
+                                                        }
+                                                        else
+                                                        {
+                                                            MostrarErrorAnimado("Operación cancelada");
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                                break;
+                                            case 4:
+                                                break;
+                                        }
+                                    } while (tipoEquipoRegistrar != 4);
+                                    break;
+                                case 2:
+                                    int opcionActualizarEquipo;
+                                    do
+                                    {
+                                        opcionActualizarEquipo = ValidarEntradasInt("Consultar equipo\n\n1. Computadoras portatiles\n2. Compotadoras de escritorios\n3. Impresoras\n4. Volver atras\n\nSelecciones una opción: ", 1, 4, "Error: opción invalida");
+                                        switch (opcionActualizarEquipo)
+                                        {
+                                            case 1:
+                                                while (true)
+                                                {
+                                                    int opcionBusquedaPortatil = ValidarEntradasInt("1. Buscar por codigo\n2. Mostrar todos los equipos\n3. Volver atras\n\nIngrese una opción: ", 1, 3, "Error: opción no valida");
+                                                    if(opcionBusquedaPortatil == 1)
+                                                    {
+                                                        int codigoPortatilBuscar = ValidarEntradasInt("Ingrese codigo de portatil a buscar: PORT-", 1, int.MaxValue, "Codigo no valido");
+                                                        int indicePortatilBuscar = -1;
+                                                        for(int i = 0; i < computadoraPortatils.Count; i++)
+                                                        {
+                                                            if (computadoraPortatils[i].Codigo == codigoPortatilBuscar)
+                                                            {
+                                                                indicePortatilBuscar = i;
+                                                                // posible break
+                                                            }
+                                                        }
+                                                        if(indicePortatilBuscar == -1)
+                                                        {
+                                                            Console.Clear();
+                                                            MostrarErrorAnimado("Codigo no encontrado");
+                                                            break;
+                                                        }
+                                                        else
+                                                        {
+                                                            Console.Clear();
+                                                            Console.WriteLine("Equipo encontrado");
+                                                            Console.WriteLine();
+                                                            computadoraPortatils[indicePortatilBuscar].MostrarInformacion();
+                                                            Console.ReadKey();
+                                                            break;
+                                                        }
+                                                    }
+                                                    else if(opcionBusquedaPortatil == 2)
+                                                    {
+                                                        if(computadoraPortatils.Count != 0)
+                                                        {
+                                                            Console.Clear();
+                                                            Console.WriteLine("Computadoras portatiles ingresadas: ");
+                                                            foreach(ComputadoraPortatil portatil in computadoraPortatils)
+                                                            {
+                                                                portatil.MostrarInformacion();
+                                                                Console.WriteLine();
+                                                            }
+                                                            Console.ReadKey();
+                                                            break;
+                                                        }
+                                                        else
+                                                        {
+                                                            Console.Clear();
+                                                            MostrarErrorAnimado("Aun no se han registrado computadoras portatiles!");
+                                                            Console.ReadKey();
+                                                            break;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        break;
+                                                    }
+                                                }
+                                                break;
+                                            case 2:
+                                                while (true)
+                                                {
+                                                    int opcionBusquedaEscritorio = ValidarEntradasInt("1. Buscar por codigo\n2. Mostrar todos los equipos\n3. Volver atras\n\nIngrese una opción: ", 1, 3, "Error: opción no valida");
+                                                    if (opcionBusquedaEscritorio == 1)
+                                                    {
+                                                        int codigoEscritorioBuscar = ValidarEntradasInt("Ingrese codigo de computadora de escritorio a buscar: ESC-", 1, int.MaxValue, "Codigo no valido");
+                                                        int indiceEscritorioBuscar = -1;
+                                                        for (int i = 0; i < computadoraDeEscritorios.Count; i++)
+                                                        {
+                                                            if (computadoraDeEscritorios[i].Codigo == codigoEscritorioBuscar)
+                                                            {
+                                                                indiceEscritorioBuscar = i;
+                                                                // posible break
+                                                            }
+                                                        }
+                                                        if (indiceEscritorioBuscar == -1)
+                                                        {
+                                                            Console.Clear();
+                                                            MostrarErrorAnimado("Codigo no encontrado");
+                                                            break;
+                                                        }
+                                                        else
+                                                        {
+                                                            Console.Clear();
+                                                            Console.WriteLine("Equipo encontrado");
+                                                            Console.WriteLine();
+                                                            computadoraDeEscritorios[indiceEscritorioBuscar].MostrarInformacion();
+                                                            Console.ReadKey();
+                                                            break;
+                                                        }
+                                                    }
+                                                    else if (opcionBusquedaEscritorio == 2)
+                                                    {
+                                                        if (computadoraPortatils.Count != 0)
+                                                        {
+                                                            Console.Clear();
+                                                            Console.WriteLine("Computadoras de escritorio ingresadas: ");
+                                                            foreach (ComputadoraDeEscritorio escritorio in computadoraDeEscritorios)
+                                                            {
+                                                                escritorio.MostrarInformacion();
+                                                                Console.WriteLine();
+                                                            }
+                                                            Console.ReadKey();
+                                                            break;
+                                                        }
+                                                        else
+                                                        {
+                                                            Console.Clear();
+                                                            MostrarErrorAnimado("Aun no se han registrado computadoras de escritorio!");
+                                                            Console.ReadKey();
+                                                            break;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        break;
+                                                    }
+                                                }
+                                                break;
+                                            case 3:
+                                                while (true)
+                                                {
+                                                    int opcionBusquedaImpresora = ValidarEntradasInt("1. Buscar por codigo\n2. Mostrar todos los equipos\n3. Volver atras\n\nIngrese una opción: ", 1, 3, "Error: opción no valida");
+                                                    if (opcionBusquedaImpresora == 1)
+                                                    {
+                                                        int codigoImpresoraBuscar = ValidarEntradasInt("Ingrese codigo de impresora a buscar: IMP-", 1, int.MaxValue, "Codigo no valido");
+                                                        int indiceImpresoraBuscar = -1;
+                                                        for (int i = 0; i < Impresoras.Count; i++)
+                                                        {
+                                                            if (Impresoras[i].Codigo == codigoImpresoraBuscar)
+                                                            {
+                                                                indiceImpresoraBuscar = i;
+                                                                // posible break
+                                                            }
+                                                        }
+                                                        if (indiceImpresoraBuscar == -1)
+                                                        {
+                                                            Console.Clear();
+                                                            MostrarErrorAnimado("Codigo no encontrado");
+                                                            break;
+                                                        }
+                                                        else
+                                                        {
+                                                            Console.Clear();
+                                                            Console.WriteLine("Equipo encontrado");
+                                                            Console.WriteLine();
+                                                            Impresoras[indiceImpresoraBuscar].MostrarInformacion();
+                                                            Console.ReadKey();
+                                                            break;
+                                                        }
+                                                    }
+                                                    else if (opcionBusquedaImpresora == 2)
+                                                    {
+                                                        if (Impresoras.Count != 0)
+                                                        {
+                                                            Console.Clear();
+                                                            Console.WriteLine("Impresoras registradas: ");
+                                                            foreach (Impresora impresora in Impresoras)
+                                                            {
+                                                                impresora.MostrarInformacion();
+                                                                Console.WriteLine();
+                                                            }
+                                                            Console.ReadKey();
+                                                            break;
+                                                        }
+                                                        else
+                                                        {
+                                                            Console.Clear();
+                                                            MostrarErrorAnimado("Aun no se han registrado impresoras");
+                                                            Console.ReadKey();
+                                                            break;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        break;
+                                                    }
+                                                }
+                                                break;
+                                            case 4:
+                                                break;
+                                        }
+                                    } while (opcionActualizarEquipo != 3);
+
+                                    break;
+                                case 3:
+                                    int opcionMenuActualizarEquipo;
+                                    do
+                                    {
+                                        opcionMenuActualizarEquipo = ValidarEntradasInt("Tipo de equipo: \n\n1. Computadora portatil\n2. Computadora de escritorio\n3. Impresora\n4. Volver atras\n\nSeleccione una opción: ", 1, 4, "Error: opción no valida");
+                                        switch (opcionMenuActualizarEquipo)
+                                        {
+                                            case 1:
+                                                Console.Clear();
+                                                int codigoPortatilBuscar = ValidarEntradasInt("Ingrese codigo de portatil a buscar: PORT-", 1, int.MaxValue, "Codigo no valido");
+                                                int indicePortatilBuscar = -1;
+                                                for (int i = 0; i < computadoraPortatils.Count; i++)
+                                                {
+                                                    if (computadoraPortatils[i].Codigo == codigoPortatilBuscar)
+                                                    {
+                                                        indicePortatilBuscar = i;
+                                                        // posible break
+                                                    }
+                                                }
+                                                if (indicePortatilBuscar == -1)
+                                                {
+                                                    Console.Clear();
+                                                    MostrarErrorAnimado("Codigo no encontrado");
+                                                    break;
+                                                }
+                                                else
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("Equipo encontrado");
+                                                    Console.WriteLine();
+                                                    computadoraPortatils[indicePortatilBuscar].MostrarInformacion();
+                                                    Console.ReadKey();
+                                                    break;
+                                                }
+
+                                                
+                                            case 2:
+                                                Console.Clear();
+                                                int codigoEscritorioBuscar = ValidarEntradasInt("Ingrese codigo de computadora de escritorio a buscar: ESC-", 1, int.MaxValue, "Codigo no valido");
+                                                int indiceEscritorioBuscar = -1;
+                                                for (int i = 0; i < computadoraDeEscritorios.Count; i++)
+                                                {
+                                                    if (computadoraDeEscritorios[i].Codigo == codigoEscritorioBuscar)
+                                                    {
+                                                        indiceEscritorioBuscar = i;
+                                                        // posible break
+                                                    }
+                                                }
+                                                if (indiceEscritorioBuscar == -1)
+                                                {
+                                                    Console.Clear();
+                                                    MostrarErrorAnimado("Codigo no encontrado");
+                                                    break;
+                                                }
+                                                else
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("Equipo encontrado");
+                                                    Console.WriteLine();
+                                                    computadoraDeEscritorios[indiceEscritorioBuscar].MostrarInformacion();
+                                                    Console.ReadKey();
+                                                    break;
+                                                }
+                                            case 3:
+                                                Console.Clear();
+
+                                                int codigoImpresoraBuscar = ValidarEntradasInt("Ingrese codigo de impresora a buscar: IMP-", 1, int.MaxValue, "Codigo no valido");
+                                                int indiceImpresoraBuscar = -1;
+                                                for (int i = 0; i < Impresoras.Count; i++)
+                                                {
+                                                    if (Impresoras[i].Codigo == codigoImpresoraBuscar)
+                                                    {
+                                                        indiceImpresoraBuscar = i;
+                                                        // posible break
+                                                    }
+                                                }
+                                                if (indiceImpresoraBuscar == -1)
+                                                {
+                                                    Console.Clear();
+                                                    MostrarErrorAnimado("Codigo no encontrado");
+                                                    break;
+                                                }
+                                                else
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("Equipo encontrado");
+                                                    Console.WriteLine();
+                                                    Impresoras[indiceImpresoraBuscar].MostrarInformacion();
+                                                    Console.ReadKey();
+                                                    break;
+                                                }
+                                            case 4:
+                                                Console.Clear();
+                                                break;
+
+                                        }
+                                    } while (opcionMenuActualizarEquipo != 4);
+
+                                    break;
+                                case 4:
+                                    break;
+                            }
+                        } while (opcionMenuEquipos != 4);
 
                         Console.ReadKey();
                         break;
@@ -525,6 +1064,70 @@ namespace XelaTech
 
             } while( opcionMenu !=11);
             
+        }
+        static void ActualizarInformacionEquipo<T>(List<T> tipoEquipo, int tipoDato, string tipoPaquete, int indice) where T : Equipo
+        {
+            Console.Clear();
+            int codigoBuscar = ValidarEntradasInt($"Ingrese codigo de paquete: {tipoPaquete}", 1, int.MaxValue, "Codigo no encontrado");
+
+            if(tipoDato == 1)
+            {
+                Console.Write("Ingrese nueva marca:");
+                string nuevaMarca = Console.ReadLine();
+                tipoEquipo[indice].ActualizarMarca(nuevaMarca);
+                Console.Clear();
+                Console.WriteLine("Marca actualizada con exito!");
+            }
+            else if(tipoDato == 2)
+            {
+                Console.Write("Ingrese nuevo modelo: ");
+                string nuevoModelo = Console.ReadLine();
+                Console.Clear();
+                tipoEquipo[indice].ActualiziarModelo(nuevoModelo);
+                Console.WriteLine("Modelo actualizado con exito!");
+            }
+            else if(tipoDato == 3)
+            {
+                string nuevoEstadoFisico;
+                while (true)
+                {
+                    int intNuevoEstadoFisico = ValidarEntradasInt("Estado fisico nuevo: \n\n1. Excelente\n2. Con daños leves\n3. Daños serevos\n\nSeleccione una opcion: ",1, 3, "Error: opción no valida");
+                    if(intNuevoEstadoFisico == 1)
+                    {
+                        nuevoEstadoFisico = "Excelente";
+                        break;
+                    }
+                    else if(intNuevoEstadoFisico == 2)
+                    {
+                        nuevoEstadoFisico = "Con daños leves";
+                        break;
+                    }
+                    else
+                    {
+                        nuevoEstadoFisico = "Daños severos";
+                        break;
+                    }
+                }
+                tipoEquipo[indice].ActualizarEstadoFisico(nuevoEstadoFisico);
+                Console.Clear();
+                Console.WriteLine("Estado fisico cambiado con exito");
+            }
+            else if(tipoDato == 4)
+            {
+                Console.Write("Ingrese nuevo numero de serie: ");
+                string nuevoNumeroSerie = Console.ReadLine();
+                tipoEquipo[indice].ActualizarNumeroSerie(nuevoNumeroSerie);
+                Console.Clear();
+                Console.WriteLine("Número de serie actualizado con exito!");
+            }
+            else
+            {
+                Console.Write("Ingrese nuevos accesorios: ");
+                string nuevosAccesorios = Console.ReadLine();
+                Console.Clear();
+                tipoEquipo[indice].ActualizarAccesorios(nuevosAccesorios);
+                Console.WriteLine("Nuevos accesorios agregados exitosamente!");
+            }
         }
         static int ValidarEntradasInt(string mensaje, int min, int max, string mensajeError)
         {

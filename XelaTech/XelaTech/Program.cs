@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlTypes;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
@@ -17,9 +18,27 @@ namespace XelaTech
         {
             List<Cliente> Clientes = new List<Cliente>();
             List<Tecnico> Tecnicos = new List<Tecnico>();
-            List<ComputadoraPortatil> computadoraPortatils = new List<ComputadoraPortatil>();
-            List<ComputadoraDeEscritorio> computadoraDeEscritorios = new List<ComputadoraDeEscritorio>();
+            List<ComputadoraPortatil> ComputadorasPortatiles = new List<ComputadoraPortatil>();
+            List<ComputadoraDeEscritorio> ComputadorasDeEscritorio = new List<ComputadoraDeEscritorio>();
             List<Impresora> Impresoras = new List<Impresora>();
+
+
+            // Datos de prueba
+            Clientes.Add(new Cliente(1, "Juan Perez", "12345678", "juan.perez@example.com", "Estudiante"));
+            Clientes.Add(new Cliente(2, "Maria Lopez", "87654321", "maria.lopez@example.com", "Institucional"));
+            Tecnicos.Add(new Tecnico(1, "Luis Ramirez", "Redes", "Disponible"));
+            Tecnicos.Add(new Tecnico(2, "Ana Torres", "Soporte", "Disponible"));
+            ComputadorasPortatiles.Add(new ComputadoraPortatil(1, "HP.", "Victus", "Con daños leves", "Cargador", "154145546"));
+            ComputadorasPortatiles.Add(new ComputadoraPortatil(2, "Dell", "Prisma", "Con daños leves", "Cargador", "15465666"));
+            ComputadorasDeEscritorio.Add(new ComputadoraDeEscritorio(1, "Lenovo", "ThinkCentre", "Con daños leves", "Cargador", "154145546"));
+            ComputadorasDeEscritorio.Add(new ComputadoraDeEscritorio(2, "Acer", "Aspire", "Con daños leves", "Cargador", "15465666"));
+            Impresoras.Add(new Impresora(1, "Canon", "Pixma", "Con daños leves", "Cargador", "154145546"));
+            Impresoras.Add(new Impresora(2, "Epson", "EcoTank", "Con daños leves", "Cargador", "15465666"));
+
+
+
+
+
             int opcionMenu;
             do
             {
@@ -94,7 +113,6 @@ namespace XelaTech
                                                         MostrarErrorAnimado("Operación cancelada");
                                                         break;
                                                     }
-
                                                 }
                                                 break;
                                             case 2:
@@ -413,11 +431,11 @@ namespace XelaTech
                                     Console.Clear();
                                     break;
                                 case 2:
-                                    Console.ReadKey();
+                                    Console.Clear();
                                     int opcionCase2Tec;
                                     do
                                     {
-                                        opcionCase2Tec = ValidarEntradasInt("1. Consultar repartidor por codigo\n2. Ver todos los tecnicos registrados\n3. Volver atras\n\nEliga una opción: ", 1, 2, "Error: opción no valida");
+                                        opcionCase2Tec = ValidarEntradasInt("1. Consultar repartidor por codigo\n2. Ver todos los tecnicos registrados\n3. Volver atras\n\nEliga una opción: ", 1, 3, "Error: opción no valida");
                                         switch (opcionCase2Tec)
                                         {
                                             case 1:
@@ -452,6 +470,7 @@ namespace XelaTech
                                                 {
                                                     Console.Clear();
                                                     Console.WriteLine("Clientes regisrados");
+                                                    Console.WriteLine();
                                                     foreach(Tecnico tecnico in Tecnicos)
                                                     {
                                                         tecnico.MostrarInformacion();
@@ -528,8 +547,8 @@ namespace XelaTech
                         break;
                     case 3:
                         Console.Clear();
-                        int codigoComputadoraPortatil = computadoraPortatils.Count + 1;
-                        int codigoComputadoraDeEscritorio = computadoraDeEscritorios.Count + 1;
+                        int codigoComputadoraPortatil = ComputadorasPortatiles.Count + 1;
+                        int codigoComputadoraDeEscritorio = ComputadorasDeEscritorio.Count + 1;
                         int codigoImpresora = Impresoras.Count + 1;
 
                         int opcionMenuEquipos;
@@ -588,7 +607,7 @@ namespace XelaTech
                                                         if(resumenCportatil == 1)
                                                         {
                                                             Console.Clear();
-                                                            computadoraPortatils.Add(new ComputadoraPortatil(codigoComputadoraPortatil, marca, modelo, estadoFisico, accesoriosEntregados, numeroSerie));
+                                                            ComputadorasPortatiles.Add(new ComputadoraPortatil(codigoComputadoraPortatil, marca, modelo, estadoFisico, accesoriosEntregados, numeroSerie));
                                                             Console.WriteLine("Equipo registrado correctamente");
                                                             Console.ReadKey();
                                                             break;
@@ -643,7 +662,7 @@ namespace XelaTech
                                                         if (resumenCEscritorio == 1)
                                                         {
                                                             Console.Clear();
-                                                            computadoraDeEscritorios.Add(new ComputadoraDeEscritorio(codigoComputadoraDeEscritorio, marca, modelo, estadoFisico, accesoriosEntregados, numeroSerie));
+                                                            ComputadorasDeEscritorio.Add(new ComputadoraDeEscritorio(codigoComputadoraDeEscritorio, marca, modelo, estadoFisico, accesoriosEntregados, numeroSerie));
                                                             Console.WriteLine("Equipo registrado correctamente");
                                                             Console.ReadKey();
                                                             break;
@@ -722,7 +741,7 @@ namespace XelaTech
                                     int opcionActualizarEquipo;
                                     do
                                     {
-                                        opcionActualizarEquipo = ValidarEntradasInt("Consultar equipo\n\n1. Computadoras portatiles\n2. Compotadoras de escritorios\n3. Impresoras\n4. Volver atras\n\nSelecciones una opción: ", 1, 4, "Error: opción invalida");
+                                        opcionActualizarEquipo = ValidarEntradasInt("Consultar equipo\n\n1. Computadoras portatiles\n2. Computadoras de escritorio\n3. Impresoras\n4. Volver atras\n\nSelecciones una opción: ", 1, 4, "Error: opción invalida");
                                         switch (opcionActualizarEquipo)
                                         {
                                             case 1:
@@ -733,12 +752,11 @@ namespace XelaTech
                                                     {
                                                         int codigoPortatilBuscar = ValidarEntradasInt("Ingrese codigo de portatil a buscar: PORT-", 1, int.MaxValue, "Codigo no valido");
                                                         int indicePortatilBuscar = -1;
-                                                        for(int i = 0; i < computadoraPortatils.Count; i++)
+                                                        for(int i = 0; i < ComputadorasPortatiles.Count; i++)
                                                         {
-                                                            if (computadoraPortatils[i].Codigo == codigoPortatilBuscar)
+                                                            if (ComputadorasPortatiles[i].Codigo == codigoPortatilBuscar)
                                                             {
                                                                 indicePortatilBuscar = i;
-                                                                // posible break
                                                             }
                                                         }
                                                         if(indicePortatilBuscar == -1)
@@ -752,20 +770,20 @@ namespace XelaTech
                                                             Console.Clear();
                                                             Console.WriteLine("Equipo encontrado");
                                                             Console.WriteLine();
-                                                            computadoraPortatils[indicePortatilBuscar].MostrarInformacion();
+                                                            ComputadorasPortatiles[indicePortatilBuscar].MostrarInformacion("PORT");
                                                             Console.ReadKey();
                                                             break;
                                                         }
                                                     }
                                                     else if(opcionBusquedaPortatil == 2)
                                                     {
-                                                        if(computadoraPortatils.Count != 0)
+                                                        if(ComputadorasPortatiles.Count != 0)
                                                         {
                                                             Console.Clear();
                                                             Console.WriteLine("Computadoras portatiles ingresadas: ");
-                                                            foreach(ComputadoraPortatil portatil in computadoraPortatils)
+                                                            foreach(ComputadoraPortatil portatil in ComputadorasPortatiles)
                                                             {
-                                                                portatil.MostrarInformacion();
+                                                                portatil.MostrarInformacion("PORT");
                                                                 Console.WriteLine();
                                                             }
                                                             Console.ReadKey();
@@ -793,12 +811,11 @@ namespace XelaTech
                                                     {
                                                         int codigoEscritorioBuscar = ValidarEntradasInt("Ingrese codigo de computadora de escritorio a buscar: ESC-", 1, int.MaxValue, "Codigo no valido");
                                                         int indiceEscritorioBuscar = -1;
-                                                        for (int i = 0; i < computadoraDeEscritorios.Count; i++)
+                                                        for (int i = 0; i < ComputadorasDeEscritorio.Count; i++)
                                                         {
-                                                            if (computadoraDeEscritorios[i].Codigo == codigoEscritorioBuscar)
+                                                            if (ComputadorasDeEscritorio[i].Codigo == codigoEscritorioBuscar)
                                                             {
                                                                 indiceEscritorioBuscar = i;
-                                                                // posible break
                                                             }
                                                         }
                                                         if (indiceEscritorioBuscar == -1)
@@ -812,20 +829,20 @@ namespace XelaTech
                                                             Console.Clear();
                                                             Console.WriteLine("Equipo encontrado");
                                                             Console.WriteLine();
-                                                            computadoraDeEscritorios[indiceEscritorioBuscar].MostrarInformacion();
+                                                            ComputadorasDeEscritorio[indiceEscritorioBuscar].MostrarInformacion("DESK");
                                                             Console.ReadKey();
                                                             break;
                                                         }
                                                     }
                                                     else if (opcionBusquedaEscritorio == 2)
                                                     {
-                                                        if (computadoraPortatils.Count != 0)
+                                                        if (ComputadorasDeEscritorio.Count != 0)
                                                         {
                                                             Console.Clear();
                                                             Console.WriteLine("Computadoras de escritorio ingresadas: ");
-                                                            foreach (ComputadoraDeEscritorio escritorio in computadoraDeEscritorios)
+                                                            foreach (ComputadoraDeEscritorio escritorio in ComputadorasDeEscritorio)
                                                             {
-                                                                escritorio.MostrarInformacion();
+                                                                escritorio.MostrarInformacion("DESK");
                                                                 Console.WriteLine();
                                                             }
                                                             Console.ReadKey();
@@ -858,7 +875,6 @@ namespace XelaTech
                                                             if (Impresoras[i].Codigo == codigoImpresoraBuscar)
                                                             {
                                                                 indiceImpresoraBuscar = i;
-                                                                // posible break
                                                             }
                                                         }
                                                         if (indiceImpresoraBuscar == -1)
@@ -872,7 +888,7 @@ namespace XelaTech
                                                             Console.Clear();
                                                             Console.WriteLine("Equipo encontrado");
                                                             Console.WriteLine();
-                                                            Impresoras[indiceImpresoraBuscar].MostrarInformacion();
+                                                            Impresoras[indiceImpresoraBuscar].MostrarInformacion("IMP");
                                                             Console.ReadKey();
                                                             break;
                                                         }
@@ -885,7 +901,7 @@ namespace XelaTech
                                                             Console.WriteLine("Impresoras registradas: ");
                                                             foreach (Impresora impresora in Impresoras)
                                                             {
-                                                                impresora.MostrarInformacion();
+                                                                impresora.MostrarInformacion("IMP");
                                                                 Console.WriteLine();
                                                             }
                                                             Console.ReadKey();
@@ -908,7 +924,7 @@ namespace XelaTech
                                             case 4:
                                                 break;
                                         }
-                                    } while (opcionActualizarEquipo != 3);
+                                    } while (opcionActualizarEquipo != 4);
 
                                     break;
                                 case 3:
@@ -920,92 +936,19 @@ namespace XelaTech
                                         {
                                             case 1:
                                                 Console.Clear();
-                                                int codigoPortatilBuscar = ValidarEntradasInt("Ingrese codigo de portatil a buscar: PORT-", 1, int.MaxValue, "Codigo no valido");
-                                                int indicePortatilBuscar = -1;
-                                                for (int i = 0; i < computadoraPortatils.Count; i++)
-                                                {
-                                                    if (computadoraPortatils[i].Codigo == codigoPortatilBuscar)
-                                                    {
-                                                        indicePortatilBuscar = i;
-                                                        // posible break
-                                                    }
-                                                }
-                                                if (indicePortatilBuscar == -1)
-                                                {
-                                                    Console.Clear();
-                                                    MostrarErrorAnimado("Codigo no encontrado");
-                                                    break;
-                                                }
-                                                else
-                                                {
-                                                    Console.Clear();
-                                                    Console.WriteLine("Equipo encontrado");
-                                                    Console.WriteLine();
-                                                    computadoraPortatils[indicePortatilBuscar].MostrarInformacion();
-                                                    Console.ReadKey();
-                                                    break;
-                                                }
-
-                                                
+                                                ActualizarInformacionEquipo(ComputadorasPortatiles, "computadora portatil", "PORT");
+                                                break;
                                             case 2:
                                                 Console.Clear();
-                                                int codigoEscritorioBuscar = ValidarEntradasInt("Ingrese codigo de computadora de escritorio a buscar: ESC-", 1, int.MaxValue, "Codigo no valido");
-                                                int indiceEscritorioBuscar = -1;
-                                                for (int i = 0; i < computadoraDeEscritorios.Count; i++)
-                                                {
-                                                    if (computadoraDeEscritorios[i].Codigo == codigoEscritorioBuscar)
-                                                    {
-                                                        indiceEscritorioBuscar = i;
-                                                        // posible break
-                                                    }
-                                                }
-                                                if (indiceEscritorioBuscar == -1)
-                                                {
-                                                    Console.Clear();
-                                                    MostrarErrorAnimado("Codigo no encontrado");
-                                                    break;
-                                                }
-                                                else
-                                                {
-                                                    Console.Clear();
-                                                    Console.WriteLine("Equipo encontrado");
-                                                    Console.WriteLine();
-                                                    computadoraDeEscritorios[indiceEscritorioBuscar].MostrarInformacion();
-                                                    Console.ReadKey();
-                                                    break;
-                                                }
+                                                ActualizarInformacionEquipo(ComputadorasDeEscritorio, "computadora de escritorio", "DESK");
+                                                break;
                                             case 3:
                                                 Console.Clear();
-
-                                                int codigoImpresoraBuscar = ValidarEntradasInt("Ingrese codigo de impresora a buscar: IMP-", 1, int.MaxValue, "Codigo no valido");
-                                                int indiceImpresoraBuscar = -1;
-                                                for (int i = 0; i < Impresoras.Count; i++)
-                                                {
-                                                    if (Impresoras[i].Codigo == codigoImpresoraBuscar)
-                                                    {
-                                                        indiceImpresoraBuscar = i;
-                                                        // posible break
-                                                    }
-                                                }
-                                                if (indiceImpresoraBuscar == -1)
-                                                {
-                                                    Console.Clear();
-                                                    MostrarErrorAnimado("Codigo no encontrado");
-                                                    break;
-                                                }
-                                                else
-                                                {
-                                                    Console.Clear();
-                                                    Console.WriteLine("Equipo encontrado");
-                                                    Console.WriteLine();
-                                                    Impresoras[indiceImpresoraBuscar].MostrarInformacion();
-                                                    Console.ReadKey();
-                                                    break;
-                                                }
+                                                ActualizarInformacionEquipo(Impresoras, "impresora", "IMP");
+                                                break;
                                             case 4:
                                                 Console.Clear();
                                                 break;
-
                                         }
                                     } while (opcionMenuActualizarEquipo != 4);
 
@@ -1015,7 +958,6 @@ namespace XelaTech
                             }
                         } while (opcionMenuEquipos != 4);
 
-                        Console.ReadKey();
                         break;
                     case 4:
                         Console.Clear();
@@ -1065,69 +1007,107 @@ namespace XelaTech
             } while( opcionMenu !=11);
             
         }
-        static void ActualizarInformacionEquipo<T>(List<T> tipoEquipo, int tipoDato, string tipoPaquete, int indice) where T : Equipo
+        static void ActualizarInformacionEquipo<T>(List<T> tipoEquipo, string tipoEquipoMostrar, string abreviatura) where T : Equipo
         {
-            Console.Clear();
-            int codigoBuscar = ValidarEntradasInt($"Ingrese codigo de paquete: {tipoPaquete}", 1, int.MaxValue, "Codigo no encontrado");
-
-            if(tipoDato == 1)
+            while (true)
             {
-                Console.Write("Ingrese nueva marca:");
-                string nuevaMarca = Console.ReadLine();
-                tipoEquipo[indice].ActualizarMarca(nuevaMarca);
                 Console.Clear();
-                Console.WriteLine("Marca actualizada con exito!");
-            }
-            else if(tipoDato == 2)
-            {
-                Console.Write("Ingrese nuevo modelo: ");
-                string nuevoModelo = Console.ReadLine();
-                Console.Clear();
-                tipoEquipo[indice].ActualiziarModelo(nuevoModelo);
-                Console.WriteLine("Modelo actualizado con exito!");
-            }
-            else if(tipoDato == 3)
-            {
-                string nuevoEstadoFisico;
-                while (true)
+                int codigoEquipoBuscar = ValidarEntradasInt($"Ingrese codigo de {tipoEquipoMostrar} a buscar: {abreviatura}-", 1, int.MaxValue, "Codigo no valido");
+                int indiceEquipo = -1;
+                for (int i = 0; i < tipoEquipo.Count; i++)
                 {
-                    int intNuevoEstadoFisico = ValidarEntradasInt("Estado fisico nuevo: \n\n1. Excelente\n2. Con daños leves\n3. Daños serevos\n\nSeleccione una opcion: ",1, 3, "Error: opción no valida");
-                    if(intNuevoEstadoFisico == 1)
+                    if (tipoEquipo[i].Codigo == codigoEquipoBuscar)
                     {
-                        nuevoEstadoFisico = "Excelente";
-                        break;
-                    }
-                    else if(intNuevoEstadoFisico == 2)
-                    {
-                        nuevoEstadoFisico = "Con daños leves";
-                        break;
-                    }
-                    else
-                    {
-                        nuevoEstadoFisico = "Daños severos";
-                        break;
+                        indiceEquipo = i;
                     }
                 }
-                tipoEquipo[indice].ActualizarEstadoFisico(nuevoEstadoFisico);
+                if (indiceEquipo == -1)
+                {
+                    Console.Clear();
+                    MostrarErrorAnimado("Codigo no encontrado");
+                    break;
+
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("Equipo encontrado");
+                    Console.WriteLine();
+                    tipoEquipo[indiceEquipo].MostrarInformacion(abreviatura);
+                    Console.ReadKey();
+
+                }
                 Console.Clear();
-                Console.WriteLine("Estado fisico cambiado con exito");
+
+                int tipoDatoActualizar = ValidarEntradasInt($"¿Que dato desea actualizar?\n\n1. Marca\n2. Modelo\n3. Estado fisico\n4. Numero de serie\n5. Accesorios\n6. Volver atras\n\nIngrese una opción: ", 1, 6, "Error: opción no valida");
+                switch (tipoDatoActualizar)
+                {
+                    case 1:
+                        Console.Write("Ingrese nueva marca:");
+                        string nuevaMarca = Console.ReadLine();
+                        tipoEquipo[indiceEquipo].ActualizarMarca(nuevaMarca);
+                        Console.Clear();
+                        Console.WriteLine("Marca actualizada con exito!");
+                        Console.ReadKey();
+                        break;
+                    case 2:
+                        Console.Write("Ingrese nuevo modelo: ");
+                        string nuevoModelo = Console.ReadLine();
+                        Console.Clear();
+                        tipoEquipo[indiceEquipo].ActualiziarModelo(nuevoModelo);
+                        Console.WriteLine("Modelo actualizado con exito!");
+                        Console.ReadKey();
+                        break;
+                    case 3:
+                        string nuevoEstadoFisico;
+                        while (true)
+                        {
+                            int intNuevoEstadoFisico = ValidarEntradasInt("Estado fisico nuevo: \n\n1. Excelente\n2. Con daños leves\n3. Daños serevos\n\nSeleccione una opcion: ", 1, 3, "Error: opción no valida");
+                            if (intNuevoEstadoFisico == 1)
+                            {
+                                nuevoEstadoFisico = "Excelente";
+                                break;
+                            }
+                            else if (intNuevoEstadoFisico == 2)
+                            {
+                                nuevoEstadoFisico = "Con daños leves";
+                                break;
+                            }
+                            else
+                            {
+                                nuevoEstadoFisico = "Daños severos";
+                                break;
+                            }
+                        }
+                        tipoEquipo[indiceEquipo].ActualizarEstadoFisico(nuevoEstadoFisico);
+                        Console.Clear();
+                        Console.WriteLine("Estado fisico cambiado con exito");
+                        Console.ReadKey();
+                        break;
+                    case 4:
+                        Console.Write("Ingrese nuevo numero de serie: ");
+                        string nuevoNumeroSerie = Console.ReadLine();
+                        tipoEquipo[indiceEquipo].ActualizarNumeroSerie(nuevoNumeroSerie);
+                        Console.Clear();
+                        Console.WriteLine("Número de serie actualizado con exito!");
+                        Console.ReadKey();
+                        break;
+                    case 5:
+                        Console.Write("Ingrese nuevos accesorios: ");
+                        string nuevosAccesorios = Console.ReadLine();
+                        Console.Clear();
+                        tipoEquipo[indiceEquipo].ActualizarAccesorios(nuevosAccesorios);
+                        Console.WriteLine("Nuevos accesorios agregados exitosamente!");
+                        Console.ReadKey();
+                        break;
+                    case 6:
+                        Console.Clear();
+                    break;
+
+                }
+                break;
             }
-            else if(tipoDato == 4)
-            {
-                Console.Write("Ingrese nuevo numero de serie: ");
-                string nuevoNumeroSerie = Console.ReadLine();
-                tipoEquipo[indice].ActualizarNumeroSerie(nuevoNumeroSerie);
-                Console.Clear();
-                Console.WriteLine("Número de serie actualizado con exito!");
-            }
-            else
-            {
-                Console.Write("Ingrese nuevos accesorios: ");
-                string nuevosAccesorios = Console.ReadLine();
-                Console.Clear();
-                tipoEquipo[indice].ActualizarAccesorios(nuevosAccesorios);
-                Console.WriteLine("Nuevos accesorios agregados exitosamente!");
-            }
+
         }
         static int ValidarEntradasInt(string mensaje, int min, int max, string mensajeError)
         {

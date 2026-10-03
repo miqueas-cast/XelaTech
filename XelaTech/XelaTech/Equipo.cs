@@ -86,7 +86,7 @@ namespace XelaTech
 			get { return marca; }
 			set 
 			{
-				if(value == null || value.Length < 3)
+				if(value == null || value.Length < 2)
                 {
                     throw new ArgumentException("La marca debe tener al menos 3 caracteres.");
                 }
@@ -136,9 +136,9 @@ namespace XelaTech
             Accesorios = accesorios;
             NumeroSerie = numeroSerie;
         }
-        public virtual void MostrarInformacion()
+        public virtual void MostrarInformacion(string abreviatura)
         {
-            Console.WriteLine("Código: " + Codigo);
+            Console.WriteLine($"Código: {abreviatura}-{Codigo}");
             Console.WriteLine("Marca: " + Marca);
             Console.WriteLine("Modelo: " + Modelo);
             Console.WriteLine("Tipo de equipo: " + TipoEquipo);
@@ -179,9 +179,9 @@ namespace XelaTech
         {
             
         }
-        public override void MostrarInformacion()
+        public override void MostrarInformacion(string abreviatura)
         {
-            base.MostrarInformacion();
+            base.MostrarInformacion(abreviatura);
         }
 
         
@@ -193,9 +193,9 @@ namespace XelaTech
         {
 
         }
-        public override void MostrarInformacion()
+        public override void MostrarInformacion(string abreviatura)
         {
-            base.MostrarInformacion();
+            base.MostrarInformacion(abreviatura);
         }
 
     }
@@ -205,9 +205,9 @@ namespace XelaTech
             : base(codigo, marca, modelo, estadoFisico, accesorios, numeroSerie)
         {
         }
-        public override void MostrarInformacion()
+        public override void MostrarInformacion(string abreviatura)
         {
-            base.MostrarInformacion();
+            base.MostrarInformacion(abreviatura);
         }
 
     }

@@ -1,3 +1,23 @@
+## Visual Studio y configuraciones de usuario
 .vs/
-bin/
-obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Carpetas de salida y compilación
+[Bb]in/
+[Oo]bj/
+
+## Binarios y ejecutables
+*.exe
+*.dll
+*.pdb
+*.ilk
+*.msi
+
+## Temporales y dependencias
+*.log
+*.tmp
+.dx/
+packages/

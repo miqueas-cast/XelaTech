@@ -167,6 +167,29 @@ namespace XelaTech
 			Console.WriteLine($"Precio de venta: {PrecioVenta}");
 			Console.WriteLine($"Cantidad utilizada: {CantidadUtilizada}");
 		}
-
+		public void ActualizarNombre(string nombreNuevo)
+		{
+			Nombre = nombreNuevo;
+		}
+		public void ActualizarCategoria(string nuevaCategoria)
+		{
+			Categoria = nuevaCategoria;
+		}
+		public void ActualizarExitenciaMinima(int existenciaMinima)
+		{
+			ExistenciaMinima = existenciaMinima;
+		}
+		public void ActualizarCostoUnitario(double nuevoCostoUnitario)
+		{
+			CostoUnitario = nuevoCostoUnitario;
+		}
+		public void ActualizarPrecioVenta(double nuevoPrecioVenta)
+		{
+			PrecioVenta = nuevoPrecioVenta;
+		}
+		public void ActualizarExistencia(int nuevaIngreso)
+		{
+			Existencia += nuevaIngreso;
+		}
     }
 }

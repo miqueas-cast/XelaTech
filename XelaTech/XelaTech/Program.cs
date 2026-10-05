@@ -21,6 +21,7 @@ namespace XelaTech
             List<ComputadoraPortatil> ComputadorasPortatiles = new List<ComputadoraPortatil>();
             List<ComputadoraDeEscritorio> ComputadorasDeEscritorio = new List<ComputadoraDeEscritorio>();
             List<Impresora> Impresoras = new List<Impresora>();
+            List<Repuesto> Repuestos = new List<Repuesto>();
 
 
             // Datos de prueba
@@ -34,6 +35,9 @@ namespace XelaTech
             ComputadorasDeEscritorio.Add(new ComputadoraDeEscritorio(2, "Acer", "Aspire", "Con daños leves", "Cargador", "15465666"));
             Impresoras.Add(new Impresora(1, "Canon", "Pixma", "Con daños leves", "Cargador", "154145546"));
             Impresoras.Add(new Impresora(2, "Epson", "EcoTank", "Con daños leves", "Cargador", "15465666"));
+            Repuestos.Add(new Repuesto(1, "Cargador", "Computador portatil", 5, 1, 45, 65, 0));
+            Repuestos.Add(new Repuesto(2, "Cargador HP", "Computador portatil", 10, 1, 70, 100, 0));
+
 
 
 
@@ -966,8 +970,220 @@ namespace XelaTech
                         break;
                     case 5:
                         Console.Clear();
+                        int opcionMenuRepuestos;
+                        int codigoRepuesto = Repuestos.Count + 1;
 
-                        Console.ReadKey();
+                        do
+                        {
+                            Console.Clear();
+                            opcionMenuRepuestos = ValidarEntradasInt("Menu de repuestos\n\n1. Registrar repuesto\n2. Consultar repuesto\n3. Actualizar información de repuesto\n4. Actualizar cantidad\n5. Volver atras\n\nIngrese una opción: ", 1, 5, "Error: opción no valida");
+                            switch (opcionMenuRepuestos)
+                            {
+                                case 1:
+                                    Console.Clear();
+
+                                    Console.Write("Ingrese nombre del repuesto: ");
+                                    string nombreRepuesto = Console.ReadLine();
+                                    Console.Clear();
+                                    Console.Write("Ingrese categoría de repuesto: ");
+                                    string categoriaRepuesto = Console.ReadLine();
+                                    Console.Clear();
+                                    int existenciaRepuesto = ValidarEntradasInt("Ingrese cantidad de repuestos: ", 1, int.MaxValue, "Error: cantidad no valida");
+                                    Console.Clear();
+                                    double costoUnitario = ValidarEntradasDouble("Ingrese costo unitario del repuesto: ", 1, double.MaxValue, "Error: costo no valido");
+                                    Console.Clear();
+                                    double precioVenta = ValidarEntradasDouble("Ingrese precio de venta del repuesto: ", 1, double.MaxValue, "Error: precio no valido");
+                                    while (true)
+                                    {
+                                        int resumenRepuesto = ValidarEntradasInt($"Resumen de datos: \n\nCodigo: REP-{codigoRepuesto}\nNombre: {nombreRepuesto}\nCategoria: {categoriaRepuesto}\nExistencia: {existenciaRepuesto}\nCosto unitario: {costoUnitario}\nPrecio de venta: {precioVenta}\n\n¿Esta seguro de registrar este repuesto?\n1. SI\n2. NO\n\nIngrese una opción:", 1, 2, "Error: opción no valida");
+                                        if (resumenRepuesto == 1)
+                                        {
+                                            Console.Clear();
+                                            Repuestos.Add(new Repuesto(codigoRepuesto, nombreRepuesto, categoriaRepuesto, existenciaRepuesto, 1, costoUnitario, precioVenta, 0));
+                                            Console.WriteLine("Repuesto registrado correctamente");
+                                            Console.ReadKey();
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            MostrarErrorAnimado("Operación cancelada");
+                                            break;
+                                        }
+                                    }
+
+                                    Console.ReadKey();
+                                    break;
+                                case 2:
+                                    Console.Clear();
+                                    int opcionConsultaRepuesto;
+                                    do
+                                    {
+                                        opcionConsultaRepuesto = ValidarEntradasInt("Consultar repuesto\n\n1. Buscar por codigo\n2. Mostrar todos los repuestos\n3. Volver atras\n\nIngrese una opción: ", 1, 3, "Error: opción no valida");
+                                        switch (opcionConsultaRepuesto)
+                                        {
+                                            case 1:
+                                                int codigoBuscarRepuesto = ValidarEntradasInt("Ingrese codigo de repuesto a buscar: REP-", 1, int.MaxValue, "Error: Codigo no valido!");
+                                                int indiceBuscarRepuesto = -1;
+                                                for (int i = 0; i < Repuestos.Count; i++)
+                                                {
+                                                    if (Repuestos[i].Codigo == codigoBuscarRepuesto)
+                                                    {
+                                                        indiceBuscarRepuesto = i;
+                                                    }
+                                                }
+                                                if (indiceBuscarRepuesto == -1)
+                                                {
+                                                    Console.Clear();
+                                                    MostrarErrorAnimado("Repuesto no encontrado");
+                                                }
+                                                else
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine("Repuesto encontrado: ");
+                                                    Console.WriteLine();
+                                                    Repuestos[indiceBuscarRepuesto].MostrarInformacion();
+                                                    Console.WriteLine();
+                                                    Console.WriteLine("Presione una tecla para volver....");
+                                                    Console.ReadKey();
+                                                }
+                                                break;
+                                            case 2:
+                                                Console.Clear();
+                                                if (Repuestos.Count == 0)
+                                                {
+                                                    MostrarErrorAnimado("Sin repuestos registrados!");
+                                                }
+                                                else
+                                                {
+                                                    Console.WriteLine("Repuestos registrados: ");
+                                                    Console.WriteLine();
+                                                    foreach (Repuesto repuesto in Repuestos)
+                                                    {
+                                                        repuesto.MostrarInformacion();
+                                                        Console.WriteLine();
+                                                    }
+                                                    Console.ReadKey();
+                                                }
+                                                break;
+                                            case 3:
+                                                break;
+                                        }
+                                    } while (opcionConsultaRepuesto != 3);
+
+                                    break;
+                                case 3:
+                                    {
+                                        Console.Clear();
+                                        Console.WriteLine("Actualizar repuesto");
+                                        int codigoActualizarRepuesto = ValidarEntradasInt("Ingrese codigo de repuesto: ", 1, int.MaxValue, "Error: codigo no encontrado!");
+                                        int indiceActualizarRepuesto = -1;
+                                        for (int i = 0; i < Repuestos.Count; i++)
+                                        {
+                                            if (Repuestos[i].Codigo == codigoActualizarRepuesto)
+                                            {
+                                                indiceActualizarRepuesto = i;
+                                            }
+                                        }
+                                        if (indiceActualizarRepuesto == -1)
+                                        {
+                                            MostrarErrorAnimado("Repuesto no encontrado");
+                                        }
+                                        else
+                                        {
+                                            Console.Clear();
+                                            Console.WriteLine("Repuesto encontrado: ");
+                                            Console.WriteLine();
+                                            Repuestos[indiceActualizarRepuesto].MostrarInformacion();
+                                            Console.WriteLine();
+                                            Console.WriteLine("Presione una tecla para volver....");
+                                            Console.ReadKey();
+
+                                            int opcionActualizarInforRepuesto = ValidarEntradasInt("Tipo de información a actualizar: \n\n1. Nombre\n2. Categoria\n3. Existencia minima\n4. Costo unitario\n5. Precio venta\n6. Volver atras\n\nSeleccione una opción: ", 1, int.MaxValue, "Error: opción no valida");
+                                            switch (opcionActualizarInforRepuesto)
+                                            {
+                                                case 1:
+                                                    Console.Clear();
+                                                    Console.Write("Ingrese nuevo nombre: ");
+                                                    Repuestos[indiceActualizarRepuesto].ActualizarNombre(Console.ReadLine());
+                                                    Console.WriteLine();
+                                                    Console.Clear();
+                                                    Console.ReadKey();
+                                                    Console.WriteLine("Nuevo nombre de repuesto actualizado cone exito!");
+                                                    break;
+                                                case 2:
+                                                    Console.Clear();
+                                                    Console.WriteLine("Ingrese nueva categoria: ");
+                                                    Repuestos[indiceActualizarRepuesto].ActualizarCategoria(Console.ReadLine());
+                                                    Console.Clear();
+                                                    Console.WriteLine("Nueva categoria de repuesto actualizada!");
+                                                    Console.ReadKey();
+                                                    break;
+                                                case 3:
+                                                    Console.Clear();
+                                                    int nuevaExistenciaMinima = ValidarEntradasInt("Ingrese nueva existencia minima: ", 1, int.MaxValue, "Error: nueva cantidad minima no permitida no permitido");
+                                                    Repuestos[indiceActualizarRepuesto].ActualizarExitenciaMinima(nuevaExistenciaMinima);
+                                                    Console.Clear();
+                                                    Console.WriteLine("Nuevo limite de existencia actualizada con exito!");
+                                                    Console.Clear();
+                                                    Console.ReadKey();
+                                                    break;
+                                                case 4:
+                                                    Console.Clear();
+                                                    double nuevoCostoUnitario = ValidarEntradasDouble("Ingrese nuevo costo unitario: ", 1, int.MaxValue, "Error: nuevo costo unitario invalido");
+                                                    Console.Clear();
+                                                    Console.WriteLine("Nuevo costo unitario actaulizado con exito!");
+                                                    Console.Clear();
+                                                    Console.ReadKey();
+                                                    break;
+                                                case 5:
+                                                    Console.Clear();
+                                                    double nuevoPrecioVenta = ValidarEntradasDouble("Ingrese nuevo precio de venta: ", 1, int.MaxValue, "Error: nuevo precio de venta actualizado");
+                                                    Console.Clear();
+                                                    Console.WriteLine("Nuevo precio de venta actualizada con exito!");
+                                                    Console.ReadKey();
+                                                    break;
+                                                case 6:
+                                                    break;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                case 4:
+                                    {
+                                        Console.Clear();
+                                        Console.WriteLine("Actualizar repuesto");
+                                        int codigoActualizarRepuesto = ValidarEntradasInt("Ingrese codigo de repuesto: ", 1, int.MaxValue, "Error: codigo no encontrado!");
+                                        int indiceActualizarRepuesto = -1;
+                                        for (int i = 0; i < Repuestos.Count; i++)
+                                        {
+                                            if (Repuestos[i].Codigo == codigoActualizarRepuesto)
+                                            {
+                                                indiceActualizarRepuesto = i;
+                                            }
+                                        }
+                                        if (indiceActualizarRepuesto == -1)
+                                        {
+                                            MostrarErrorAnimado("Repuesto no encontrado");
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Repuesto encontrado: ");
+                                            Console.WriteLine($"Stock actual: {Repuestos[indiceActualizarRepuesto].Existencia}");
+                                            Console.ReadKey();
+                                            Console.WriteLine();
+                                            int nuevoIngreso = ValidarEntradasInt("Ingrese nueva existencia: ", 1, 500, "Error: cantidad no permitida");
+                                            Console.Clear();
+                                            Repuestos[indiceActualizarRepuesto].ActualizarExistencia(nuevoIngreso);
+                                            Console.WriteLine("Existencia actualizada con exito!");
+                                            Console.ReadKey();
+                                        }
+                                    }
+                                    break;
+                                case 5:
+                                    break;
+                                        
+                            }
+                        } while (opcionMenuRepuestos != 5);
                         break;
                     case 6:
                         Console.Clear();
@@ -1126,6 +1342,30 @@ namespace XelaTech
                     Console.Write(mensaje);
                 }
                 else if (valor < min || valor >max)
+                {
+                    MostrarErrorAnimado(mensajeError);
+                    Console.Write(mensaje);
+                }
+            } while (!esValido);
+            return valor;
+        }
+        static double ValidarEntradasDouble(string mensaje, double min, double max, string mensajeError)
+        {
+            double valor;
+            bool esValido;
+            do
+            {
+                Console.Clear();
+                Console.Write(mensaje);
+                string entrada = Console.ReadLine();
+                esValido = double.TryParse(entrada, out valor);
+                if (!esValido)
+                {
+
+                    MostrarErrorAnimado("Por favor ingrese un caracter valido!");
+                    Console.Write(mensaje);
+                }
+                else if (valor < min || valor > max)
                 {
                     MostrarErrorAnimado(mensajeError);
                     Console.Write(mensaje);

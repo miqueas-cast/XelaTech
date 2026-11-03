@@ -9,115 +9,129 @@ namespace XelaTech
 {
     public class Equipo
     {
-		private int codigo;
-		private string numeroSerie;
-		private string marca;
-		private string modelo;
-		private string tipoEquipo;
-		private string estadoFisico;
-		private string accesorios;
+        private int codigo;
+        private string numeroSerie;
+        private string marca;
+        private string modelo;
+        private string tipoEquipo;
+        private string estadoFisico;
+        private string accesorios;
+        private Cliente propietario;
 
-		public string Accesorios
-		{
-			get { return accesorios; }
-			set 
-			{
-				if(value == null || value.Length < 3)
+        public Cliente Propietario
+        {
+            get { return propietario; }
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentException("Seleccione un propietario registrado.");
+                }
+                propietario = value;
+            }
+        }
+
+        public string Accesorios
+        {
+            get { return accesorios; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value) || value.Trim().Length < 3)
                 {
                     throw new ArgumentException("Los accesorios deben tener al menos 3 caracteres.");
                 }
                 else
                 {
-                    accesorios = value;
+                    accesorios = value.Trim();
                 }
             }
-		}
+        }
 
-		public string EstadoFisico
-		{
-			get { return estadoFisico; }
-			set 
-			{
-				if(value == null || value.Length < 3)
+        public string EstadoFisico
+        {
+            get { return estadoFisico; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value) || value.Trim().Length < 3)
                 {
                     throw new ArgumentException("El estado físico debe tener al menos 3 caracteres.");
                 }
                 else
                 {
-                    estadoFisico = value;
+                    estadoFisico = value.Trim();
                 }
             }
-		}
+        }
 
-		public string TipoEquipo
-		{
-			get { return tipoEquipo; }
-			set 
-			{ 
-				if(value == null || value.Length < 3)
+        public string TipoEquipo
+        {
+            get { return tipoEquipo; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value) || value.Trim().Length < 3)
                 {
                     throw new ArgumentException("El tipo de equipo debe tener al menos 3 caracteres.");
                 }
                 else
                 {
-                    tipoEquipo = value;
+                    tipoEquipo = value.Trim();
                 }
             }
-		}
+        }
 
-		public string Modelo
-		{
-			get { return modelo; }
-			set 
-			{
-				if(value == null || value.Length < 3)
+        public string Modelo
+        {
+            get { return modelo; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value) || value.Trim().Length < 3)
                 {
                     throw new ArgumentException("El modelo debe tener al menos 3 caracteres.");
                 }
                 else
                 {
-                    modelo = value;
+                    modelo = value.Trim();
                 }
             }
-		}
+        }
 
-		public string Marca
-		{
-			get { return marca; }
-			set 
-			{
-				if(value == null || value.Length < 2)
+        public string Marca
+        {
+            get { return marca; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value) || value.Trim().Length < 2)
                 {
-                    throw new ArgumentException("La marca debe tener al menos 3 caracteres.");
+                    throw new ArgumentException("La marca debe tener al menos 2 caracteres.");
                 }
                 else
                 {
-                    marca = value;
+                    marca = value.Trim();
                 }
             }
-		}
+        }
 
-		public string NumeroSerie
-		{
-			get { return numeroSerie; }
-			set 
-			{
-				if(value == null || value.Length < 3)
+        public string NumeroSerie
+        {
+            get { return numeroSerie; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value) || value.Trim().Length < 3)
                 {
                     throw new ArgumentException("El número de serie debe tener al menos 3 caracteres.");
                 }
                 else
                 {
-                    numeroSerie = value;
+                    numeroSerie = value.Trim();
                 }
             }
-		}
-		public int Codigo
-		{
-			get { return codigo; }
-			set 
-			{
-				if(value <= 0)
+        }
+        public int Codigo
+        {
+            get { return codigo; }
+            set
+            {
+                if (value <= 0)
                 {
                     throw new ArgumentException("El código debe ser un número positivo.");
                 }
@@ -126,7 +140,7 @@ namespace XelaTech
                     codigo = value;
                 }
             }
-		}
+        }
         public Equipo(int codigo, string marca, string modelo, string estadoFisico, string accesorios, string numeroSerie)
         {
             Codigo = codigo;
@@ -135,6 +149,13 @@ namespace XelaTech
             EstadoFisico = estadoFisico;
             Accesorios = accesorios;
             NumeroSerie = numeroSerie;
+            TipoEquipo = "Equipo";
+        }
+
+        public Equipo(int codigo, string marca, string modelo, string estadoFisico, string accesorios, string numeroSerie, Cliente propietario)
+            : this(codigo, marca, modelo, estadoFisico, accesorios, numeroSerie)
+        {
+            Propietario = propietario;
         }
         public virtual void MostrarInformacion(string abreviatura)
         {
@@ -145,6 +166,7 @@ namespace XelaTech
             Console.WriteLine("Estado físico: " + EstadoFisico);
             Console.WriteLine("Accesorios: " + Accesorios);
             Console.WriteLine("Número de serie: " + NumeroSerie);
+            Console.WriteLine("Propietario: " + (Propietario == null ? "Sin registrar" : "CLI-" + Propietario.Codigo + " " + Propietario.NombreCompleto));
         }
         public virtual void ActualizarMarca(string marca)
         {
@@ -156,7 +178,7 @@ namespace XelaTech
         }
         public virtual void ActualziarTipoEquipo(string tipoEquipo)
         {
-            TipoEquipo = tipoEquipo; 
+            TipoEquipo = tipoEquipo;
         }
         public virtual void ActualizarEstadoFisico(string estadoEquipo)
         {
@@ -164,7 +186,7 @@ namespace XelaTech
         }
         public virtual void ActualizarNumeroSerie(string numeroSerie)
         {
-            NumeroSerie = numeroSerie; 
+            NumeroSerie = numeroSerie;
         }
         public virtual void ActualizarAccesorios(string accesorios)
         {
@@ -172,41 +194,63 @@ namespace XelaTech
         }
 
     }
-	public class ComputadoraPortatil: Equipo
-	{
-        public ComputadoraPortatil(int codigo, string marca, string modelo, string estadoFisico, string accesorios, string numeroSerie) 
+    public class ComputadoraPortatil : Equipo
+    {
+        public ComputadoraPortatil(int codigo, string marca, string modelo, string estadoFisico, string accesorios, string numeroSerie)
             : base(codigo, marca, modelo, estadoFisico, accesorios, numeroSerie)
         {
-            
+            TipoEquipo = "Computadora portátil";
+        }
+
+        public ComputadoraPortatil(int codigo, string marca, string modelo, string estadoFisico, string accesorios, string numeroSerie, Cliente propietario)
+            : this(codigo, marca, modelo, estadoFisico, accesorios, numeroSerie)
+        {
+            Propietario = propietario;
         }
         public override void MostrarInformacion(string abreviatura)
         {
+            Console.WriteLine("=== COMPUTADORA PORTÁTIL ===");
             base.MostrarInformacion(abreviatura);
         }
 
-        
+
     }
-	public class ComputadoraDeEscritorio : Equipo
+    public class ComputadoraDeEscritorio : Equipo
     {
         public ComputadoraDeEscritorio(int codigo, string marca, string modelo, string estadoFisico, string accesorios, string numeroSerie)
             : base(codigo, marca, modelo, estadoFisico, accesorios, numeroSerie)
         {
+            TipoEquipo = "Computadora de escritorio";
+        }
 
+        public ComputadoraDeEscritorio(int codigo, string marca, string modelo, string estadoFisico, string accesorios, string numeroSerie, Cliente propietario)
+            : this(codigo, marca, modelo, estadoFisico, accesorios, numeroSerie)
+        {
+            Propietario = propietario;
         }
         public override void MostrarInformacion(string abreviatura)
         {
+            Console.WriteLine("=== COMPUTADORA DE ESCRITORIO ===");
             base.MostrarInformacion(abreviatura);
         }
 
     }
-	public class Impresora : Equipo
+    public class Impresora : Equipo
     {
         public Impresora(int codigo, string marca, string modelo, string estadoFisico, string accesorios, string numeroSerie)
             : base(codigo, marca, modelo, estadoFisico, accesorios, numeroSerie)
         {
+            TipoEquipo = "Impresora";
+        }
+
+        public Impresora(int codigo, string marca, string modelo, string estadoFisico, string accesorios, string numeroSerie, Cliente propietario)
+            : this(codigo, marca, modelo, estadoFisico, accesorios, numeroSerie)
+        {
+            Propietario = propietario;
         }
         public override void MostrarInformacion(string abreviatura)
         {
+            Console.WriteLine("=== IMPRESORA ===");
             base.MostrarInformacion(abreviatura);
         }
 

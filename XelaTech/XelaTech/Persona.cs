@@ -6,159 +6,167 @@ using System.Threading.Tasks;
 
 namespace XelaTech
 {
-	public class Persona
-	{
-		private int codigo;
-		private string nombreCompleto;
+    public class Persona
+    {
+        protected int codigo;
+        protected string nombreCompleto;
 
-		public string NombreCompleto
-		{
-			get { return nombreCompleto; }
-			set
-			{
-				if (value == null || value.Length < 3)
-				{
-					throw new ArgumentException("El nombre completo debe tener al menos 3 caracteres.");
-				}
-				else
-				{
-					nombreCompleto = value;
+        public string NombreCompleto
+        {
+            get { return nombreCompleto; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value) || value.Trim().Length < 3)
+                {
+                    throw new ArgumentException("El nombre completo debe tener al menos 3 caracteres.");
+                }
+                else
+                {
+                    nombreCompleto = value.Trim();
 
-				}
-			}
-		}
+                }
+            }
+        }
 
-		public int Codigo
-		{
-			get { return codigo; }
-			set
-			{
-				if (value <= 0)
-				{
-					throw new ArgumentException("El código debe ser un número positivo.");
-				}
-				else
-				{
-					codigo = value;
-				}
-			}
-		}
-		public Persona(int codigo, string nombre)
-		{
-			Codigo = codigo;
-			nombreCompleto = nombre;
-		}
-		public virtual void MostrarInformacion()
-		{
-			
-		}
+        public int Codigo
+        {
+            get { return codigo; }
+            set
+            {
+                if (value <= 0)
+                {
+                    throw new ArgumentException("El código debe ser un número positivo.");
+                }
+                else
+                {
+                    codigo = value;
+                }
+            }
+        }
+        public Persona(int codigo, string nombre)
+        {
+            Codigo = codigo;
+            NombreCompleto = nombre;
+        }
+        public virtual void MostrarInformacion()
+        {
 
-	}
-	public class Cliente : Persona
-	{
-		private string numeroTelefono;
-		private string correoElectronico;
-		private string tipoCliente;
-		private int cantidadSolicitudes;
+        }
 
-		public int CantidadSolicitudes
-		{
-			get { return cantidadSolicitudes; }
-			set
-			{
-				if (value < 0)
-				{
-					throw new ArgumentException("La cantidad de solicitudes no puede ser negativa.");
-				}
-				else
-				{
-					cantidadSolicitudes = value;
-				}
-			}
-		}
+    }
+    public class Cliente : Persona
+    {
+        private string numeroTelefono;
+        private string correoElectronico;
+        private string tipoCliente;
+        private int cantidadSolicitudes;
 
-		public string TipoCliente
-		{
-			get { return tipoCliente; }
-			set
-			{
-				if (value == null || value.Length < 3)
-				{
-					throw new ArgumentException("El tipo de cliente debe tener al menos 3 caracteres.");
-				}
-				else
-				{
-					tipoCliente = value;
-				}
-			}
-		}
+        public int CantidadSolicitudes
+        {
+            get { return cantidadSolicitudes; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("La cantidad de solicitudes no puede ser negativa.");
+                }
+                else
+                {
+                    cantidadSolicitudes = value;
+                }
+            }
+        }
 
-		public string CorreoElectronicio
-		{
-			get { return correoElectronico; }
-			set
-			{
-				if (value == null || !value.Contains("@"))
-				{
-					throw new ArgumentException("El correo electrónico no es válido.");
-				}
-				else
-				{
-					correoElectronico = value;
-				}
-			}
-		}
+        public string TipoCliente
+        {
+            get { return tipoCliente; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value) || value.Trim().Length < 3)
+                {
+                    throw new ArgumentException("El tipo de cliente debe tener al menos 3 caracteres.");
+                }
+                else
+                {
+                    tipoCliente = value.Trim();
+                }
+            }
+        }
 
-		public string NumeroTelefono
-		{
-			get { return numeroTelefono; }
-			set
-			{
-				if (value == null || value.Length < 8)
-				{
-					throw new ArgumentException("El número de teléfono debe tener al menos 8 dígitos.");
-				}
-				else
-				{
-					numeroTelefono = value;
-				}
-			}
-		}
-		public Cliente(int codigo, string nombre, string numeroTelefono, string correoElectronico, string tipoCliente)
-			: base(codigo, nombre)
-		{
-			NumeroTelefono = numeroTelefono;
-			CorreoElectronicio = correoElectronico;
-			TipoCliente = tipoCliente;
-			CantidadSolicitudes = 0;
-		}
-		public virtual void MostrarInformacion()
-		{
+        public string CorreoElectronicio
+        {
+            get { return correoElectronico; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value) || value.Trim().IndexOf('@') <= 0 || value.Trim().IndexOf('@') != value.Trim().LastIndexOf('@') || value.Trim().EndsWith("@") || value.Trim().Contains(" "))
+                {
+                    throw new ArgumentException("El correo electrónico no es válido.");
+                }
+                else
+                {
+                    correoElectronico = value.Trim();
+                }
+            }
+        }
+
+        public string NumeroTelefono
+        {
+            get { return numeroTelefono; }
+            set
+            {
+                if (value == null || value.Length != 8)
+                {
+                    throw new ArgumentException("El número de teléfono debe tener exactamente 8 dígitos.");
+                }
+                else
+                {
+                    for (int i = 0; i < value.Length; i++)
+                    {
+                        if (value[i] < '0' || value[i] > '9')
+                        {
+                            throw new ArgumentException("El teléfono debe contener solo dígitos.");
+                        }
+                    }
+                    numeroTelefono = value;
+                }
+            }
+        }
+        public Cliente(int codigo, string nombre, string numeroTelefono, string correoElectronico, string tipoCliente)
+            : base(codigo, nombre)
+        {
+            NumeroTelefono = numeroTelefono;
+            CorreoElectronicio = correoElectronico;
+            TipoCliente = tipoCliente;
+            CantidadSolicitudes = 0;
+        }
+        public override void MostrarInformacion()
+        {
             Console.WriteLine("Codigo: CLI-" + Codigo);
             Console.WriteLine("Nombre: " + NombreCompleto);
-			Console.WriteLine("Número de teléfono: " + NumeroTelefono);
-			Console.WriteLine("Correo electrónico: " + CorreoElectronicio);
-			Console.WriteLine("Tipo de cliente: " + TipoCliente);
-		}
-		public void ActualizarNombre(string nuevoNombre)
-		{
-			NombreCompleto = nuevoNombre;
-		}
-		public void ActualizarNumeroTelefono(string nuevoNumeroTelefono)
-		{
-			NumeroTelefono = nuevoNumeroTelefono;
-		}
-		public void ActualizarCorreoElectronico(string nuevoCorreoElectronico)
-		{
-			CorreoElectronicio = nuevoCorreoElectronico;
+            Console.WriteLine("Número de teléfono: " + NumeroTelefono);
+            Console.WriteLine("Correo electrónico: " + CorreoElectronicio);
+            Console.WriteLine("Tipo de cliente: " + TipoCliente);
+            Console.WriteLine("Cantidad de solicitudes: " + CantidadSolicitudes);
+        }
+        public void ActualizarNombre(string nuevoNombre)
+        {
+            NombreCompleto = nuevoNombre;
+        }
+        public void ActualizarNumeroTelefono(string nuevoNumeroTelefono)
+        {
+            NumeroTelefono = nuevoNumeroTelefono;
+        }
+        public void ActualizarCorreoElectronico(string nuevoCorreoElectronico)
+        {
+            CorreoElectronicio = nuevoCorreoElectronico;
 
-		}
-		public void ActualizarTipoCliente(string nuevoTipoCliente)
-		{
-			TipoCliente = nuevoTipoCliente;
-		}
-		
-	}
+        }
+        public void ActualizarTipoCliente(string nuevoTipoCliente)
+        {
+            TipoCliente = nuevoTipoCliente;
+        }
+
+    }
     public class Tecnico : Persona
     {
         private string especialidad;
@@ -172,7 +180,7 @@ namespace XelaTech
             get { return calificacionPromedio; }
             set
             {
-                if (value < 0 || value > 5)
+                if (double.IsNaN(value) || double.IsInfinity(value) || value < 0 || value > 5)
                 {
                     throw new ArgumentException("La calificación promedio debe estar entre 0 y 5.");
                 }
@@ -236,13 +244,17 @@ namespace XelaTech
             get { return especialidad; }
             set
             {
-                if (value == null || value.Length < 3)
+                if (string.IsNullOrWhiteSpace(value) || value.Trim().Length < 3)
                 {
                     throw new ArgumentException("La especialidad debe tener al menos 3 caracteres.");
                 }
                 else
                 {
-                    especialidad = value;
+                    if (CantidadTrabajosActivos > 0 && !string.Equals(especialidad, value.Trim(), StringComparison.OrdinalIgnoreCase))
+                    {
+                        throw new ArgumentException("No puede cambiar la especialidad mientras tenga trabajos activos.");
+                    }
+                    especialidad = value.Trim();
                 }
             }
         }
@@ -255,7 +267,7 @@ namespace XelaTech
             CantidadTrabajosFinalizados = 0;
             CalificacionPromedio = 0;
         }
-        public virtual void MostrarInformacion()
+        public override void MostrarInformacion()
         {
             Console.WriteLine("Codigo: TEC-" + Codigo);
             Console.WriteLine("Nombre: " + NombreCompleto);
@@ -265,16 +277,16 @@ namespace XelaTech
             Console.WriteLine("Cantidad de trabajos finalizados: " + CantidadTrabajosFinalizados);
             Console.WriteLine("Calificación promedio: " + CalificacionPromedio);
         }
-		public void ActualizarNombre(string nuevoNombre)
-		{
+        public void ActualizarNombre(string nuevoNombre)
+        {
             NombreCompleto = nuevoNombre;
         }
-		public void ActualizarEspecialidad(string nuevaEspecialidad)
-		{
+        public void ActualizarEspecialidad(string nuevaEspecialidad)
+        {
             Especialidad = nuevaEspecialidad;
         }
-		public void ActualizarEstadoDisponibilidad(string nuevoEstadoDisponibilidad)
-		{
+        public void ActualizarEstadoDisponibilidad(string nuevoEstadoDisponibilidad)
+        {
             EstadoDisponibilidad = nuevoEstadoDisponibilidad;
         }
     }

@@ -27,7 +27,7 @@ namespace XelaTech
             Queue<Solicitud> PrioridadUrgente = new Queue<Solicitud>();
             Random generador = new Random();
 
-            // Datos de prueba preestablecidos
+            // Datos de prueba 
             Clientes.Add(new Cliente(1, "Juan Perez", "12345678", "juanperez@example.com", "Estudiante"));
             Clientes.Add(new Cliente(2, "Maria Lopez", "87654321", "marialopez@example.com", "Institución"));
             Tecnicos.Add(new Tecnico(1, "Luis Ramirez", "Redes", "Disponible"));
@@ -40,10 +40,6 @@ namespace XelaTech
             Impresoras.Add(new Impresora(2, "Epson", "EcoTank", "Con daños leves", "Cargador", "15465668", Clientes[1]));
             Repuestos.Add(new Repuesto(1, "Cargador", "Computador portatil", 5, 1, 45, 65, 0));
             Repuestos.Add(new Repuesto(2, "Cargador HP", "Computador portatil", 10, 1, 70, 100, 0));
-
-
-
-
 
 
 
@@ -1376,7 +1372,7 @@ namespace XelaTech
                             GestionarBusquedas(Clientes, Solicitudes, ComputadorasPortatiles, ComputadorasDeEscritorio, Impresoras);
                             break;
                         case 9:
-                            GestionarReportes(Clientes, Tecnicos, ComputadorasPortatiles, ComputadorasDeEscritorio, Impresoras, Repuestos, Solicitudes);
+                            GestionarReportes(Clientes, Tecnicos, ComputadorasPortatiles, ComputadorasDeEscritorio, Impresoras, Repuestos, Solicitudes, PrioridadNormal, PrioridadUrgente);
                             break;
                         case 10:
                             GestionarDatosPrueba(Clientes, Tecnicos, ComputadorasPortatiles, ComputadorasDeEscritorio, Impresoras, Repuestos, Solicitudes, PrioridadNormal, PrioridadUrgente, generador);
@@ -1406,7 +1402,7 @@ namespace XelaTech
             } while (opcionMenu != 11);
 
         }
-        static void GestionarReportes(List<Cliente> clientes, List<Tecnico> tecnicos, List<ComputadoraPortatil> portatiles, List<ComputadoraDeEscritorio> escritorios, List<Impresora> impresoras, List<Repuesto> repuestos, List<Solicitud> solicitudes)
+        static void GestionarReportes(List<Cliente> clientes, List<Tecnico> tecnicos, List<ComputadoraPortatil> portatiles, List<ComputadoraDeEscritorio> escritorios, List<Impresora> impresoras, List<Repuesto> repuestos, List<Solicitud> solicitudes, Queue<Solicitud> normales, Queue<Solicitud> urgentes)
         {
             int opcionReporte;
             do
@@ -1419,8 +1415,7 @@ namespace XelaTech
                     {
                         case 1:
                             {
-                                Queue<Solicitud> normales = new Queue<Solicitud>();
-                                Queue<Solicitud> urgentes = new Queue<Solicitud>();
+                                // Usar las colas reales permite mostrar el turno actual después de un deshacer.
                                 SincronizarColasSolicitudes(solicitudes, normales, urgentes);
                                 MostrarColasSolicitudes(normales, urgentes);
                                 break;
@@ -1677,8 +1672,14 @@ namespace XelaTech
 
         static DateTime ObtenerInicioSemana(DateTime fecha)
         {
-            int diasDesdeLunes = ((int)fecha.DayOfWeek + 6) % 7;
-            return fecha.Date.AddDays(-diasDesdeLunes);
+            DateTime inicio = fecha.Date;
+
+            while (inicio.DayOfWeek != DayOfWeek.Monday)
+            {
+                inicio = inicio.AddDays(-1);
+            }
+
+            return inicio;
         }
 
         static int[,] CrearMatrizCargaSemanal(List<Tecnico> tecnicos, List<Solicitud> solicitudes, DateTime fechaSemana)
@@ -1704,7 +1705,6 @@ namespace XelaTech
             }
             return matriz;
         }
-
         static int[] CalcularTotalesPorTecnico(int[,] matriz)
         {
             int[] totales = new int[matriz.GetLength(0)];
@@ -1872,6 +1872,7 @@ namespace XelaTech
             }
             return false;
         }
+
 
         static void GenerarDatosPrueba(List<Cliente> clientes, List<Tecnico> tecnicos, List<ComputadoraPortatil> portatiles, List<ComputadoraDeEscritorio> escritorios, List<Impresora> impresoras, List<Repuesto> repuestos, List<Solicitud> solicitudes, Queue<Solicitud> normales, Queue<Solicitud> urgentes, int cantidad, Random generador)
         {
@@ -2125,6 +2126,7 @@ namespace XelaTech
             Console.WriteLine();
         }
 
+
         static List<Solicitud> BubbleSortSolicitudesPorCosto(List<Solicitud> solicitudes, bool ascendente)
         {
             List<Solicitud> ordenadas = new List<Solicitud>(solicitudes);
@@ -2170,7 +2172,6 @@ namespace XelaTech
             }
             return ordenados;
         }
-
         static List<Repuesto> ShellSortRepuestosPorExistencia(List<Repuesto> repuestos, bool ascendente)
         {
             List<Repuesto> ordenados = new List<Repuesto>(repuestos);
@@ -2202,6 +2203,7 @@ namespace XelaTech
             }
             return ordenadas;
         }
+
 
         static void QuickSortSolicitudesPorFecha(List<Solicitud> solicitudes, int inicio, int fin, bool ascendente)
         {
@@ -2433,7 +2435,6 @@ namespace XelaTech
             }
             return ordenadas;
         }
-
         static Solicitud BuscarSolicitudBinaria(List<Solicitud> solicitudes, int codigo)
         {
             List<Solicitud> ordenadas = OrdenarSolicitudesPorCodigo(solicitudes);
@@ -2572,6 +2573,11 @@ namespace XelaTech
                         break;
                 }
                 if (equipoSeleccionado == null) MostrarErrorAnimado("Equipo no encontrado.");
+                else if (equipoSeleccionado.Propietario == null || equipoSeleccionado.Propietario.Codigo != clienteSeleccionado.Codigo)
+                {
+                    MostrarErrorAnimado("El equipo no pertenece al cliente CLI-" + clienteSeleccionado.Codigo + ". Seleccione un equipo de este cliente o cancele para regresar al menú.");
+                    equipoSeleccionado = null;
+                }
             }
             if (ExisteSolicitudActiva(solicitudes, equipoSeleccionado))
             {
@@ -2846,16 +2852,34 @@ namespace XelaTech
 
         static void SincronizarColasSolicitudes(List<Solicitud> solicitudes, Queue<Solicitud> normales, Queue<Solicitud> urgentes)
         {
-            normales.Clear();
-            urgentes.Clear();
+            DepurarColaSolicitudes(solicitudes, normales, "Normal");
+            DepurarColaSolicitudes(solicitudes, urgentes, "Urgente");
             foreach (Solicitud solicitud in solicitudes)
             {
                 if (solicitud.Estado == "En espera")
                 {
-                    if (solicitud.Prioridad == "Urgente") urgentes.Enqueue(solicitud);
-                    else normales.Enqueue(solicitud);
+                    if (solicitud.Prioridad == "Urgente")
+                    {
+                        if (!urgentes.Contains(solicitud)) urgentes.Enqueue(solicitud);
+                    }
+                    else if (!normales.Contains(solicitud)) normales.Enqueue(solicitud);
                 }
             }
+        }
+
+        static void DepurarColaSolicitudes(List<Solicitud> solicitudes, Queue<Solicitud> cola, string prioridad)
+        {
+            Queue<Solicitud> pendientes = new Queue<Solicitud>();
+            while (cola.Count > 0)
+            {
+                Solicitud solicitud = cola.Dequeue();
+                if (solicitud != null && solicitudes.Contains(solicitud) && solicitud.Estado == "En espera" &&
+                    solicitud.Prioridad == prioridad && !pendientes.Contains(solicitud))
+                {
+                    pendientes.Enqueue(solicitud);
+                }
+            }
+            foreach (Solicitud solicitud in pendientes) cola.Enqueue(solicitud);
         }
 
         static Solicitud ObtenerSiguienteSolicitud(Queue<Solicitud> normales, Queue<Solicitud> urgentes)
@@ -2904,7 +2928,6 @@ namespace XelaTech
             Console.WriteLine("Solicitud asignada correctamente.");
             Console.ReadKey();
         }
-
         static void ActualizarInformacionEquipo<T>(List<T> tipoEquipo, string tipoEquipoMostrar, string abreviatura, List<ComputadoraPortatil> portatiles, List<ComputadoraDeEscritorio> escritorios, List<Impresora> impresoras) where T : Equipo
         {
             while (true)

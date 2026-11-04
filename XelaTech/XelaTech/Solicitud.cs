@@ -151,6 +151,10 @@ namespace XelaTech
             {
                 throw new ArgumentException("Debe seleccionar un cliente y un equipo existentes.");
             }
+            if (equipo.Propietario == null || equipo.Propietario.Codigo != cliente.Codigo)
+            {
+                throw new ArgumentException("El equipo debe tener un propietario registrado con el mismo código del cliente de la solicitud.");
+            }
             if (estado != "Recibida" || tecnico != null || costoRepuestos != 0)
             {
                 throw new ArgumentException("La solicitud debe comenzar recibida, sin técnico ni repuestos utilizados.");
@@ -166,7 +170,6 @@ namespace XelaTech
             Equipo = equipo;
             this.estado = estado;
             CalcularTotal();
-            if (equipo.Propietario == null) equipo.Propietario = cliente;
         }
 
         private void ValidarModificacion()
